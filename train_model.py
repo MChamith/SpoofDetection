@@ -5,9 +5,10 @@ import fnmatch
 import json
 import os
 import tqdm
+import numpy as np
 
-data = {'train': []}
-labels = {}
+data = {'train': [], 'label': []}
+# labels = {'spoof':[]}
 
 TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
 
@@ -17,11 +18,11 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         # print(path)
         data['train'].append(path)
         if path.split('/')[-3] == 'live':
-            labels[path] = 1
-            print('1')
+            data['label'] = 1
+            print('path ' + str(path) + ' label 1')
         elif path.split('/')[-3] == 'spoof':
-            labels[path] = 0
-            print('0')
+            data['label'] = 0
+            print('path ' + str(path) + ' label 0')
 
 #       img = image.load_img(path, target_size=(128,128), grayscale = True)
 #       img_array = image.img_to_array(img)
@@ -33,5 +34,5 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
 # print(path.split('/')[-3])
 with open('data.txt', 'w') as file:
     file.write(json.dumps(data))
-with open('labels.txt', 'w') as file:
-    file.write(json.dumps(labels))
+# with open('labels.txt', 'w') as file:
+#     file.write(json.dumps(labels))
