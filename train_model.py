@@ -9,7 +9,7 @@ import tqdm
 data = {'train': []}
 labels = {}
 
-TRAIN_DIR = 'home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
+TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
 
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
