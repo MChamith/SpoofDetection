@@ -18,10 +18,10 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         # print(path)
         data['train'].append(path)
         if path.split('/')[-3] == 'live':
-            data['label'] = 1
+            data['label'].append(1)
             print('path ' + str(path) + ' label 1')
         elif path.split('/')[-3] == 'spoof':
-            data['label'] = 0
+            data['label'].append(0)
             print('path ' + str(path) + ' label 0')
 
 #       img = image.load_img(path, target_size=(128,128), grayscale = True)
@@ -30,9 +30,10 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
 
 #   np.save('training_data.npy' , train_data)
 
+print(data['label'])
 # path = 'home/ec2-user/dataset/SIWFaces/SiW_release/Train/live/003/1231.jpg'
 # print(path.split('/')[-3])
-with open('data.txt', 'w') as file:
-    file.write(json.dumps(data))
+# with open('data.txt', 'w') as file:
+#     file.write(json.dumps(data))
 # with open('labels.txt', 'w') as file:
 #     file.write(json.dumps(labels))
