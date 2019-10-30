@@ -5,7 +5,6 @@ from skimage import data, feature, color, filters, img_as_float
 from matplotlib import pyplot as plt
 from PIL import Image
 import matplotlib
-import tkinter
 import cv2
 
 
