@@ -14,12 +14,14 @@ TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        print(path)
+        # print(path)
         data['train'].append(path)
         if path.split('/')[-3] == 'live':
             labels[path] = 1
+            print('1')
         elif path.split('/')[-3] == 'spoof':
             labels[path] = 0
+            print('0')
 
 #       img = image.load_img(path, target_size=(128,128), grayscale = True)
 #       img_array = image.img_to_array(img)
