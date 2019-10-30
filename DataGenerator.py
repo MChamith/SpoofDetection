@@ -55,11 +55,14 @@ class DataGenerator(keras.utils.Sequence):
             print(ID)
             img = cv2.imread(ID)
             idx = self.list_IDs.index(ID)
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            dog = calc_dog(gray)
-            lbp = calc_lbp(gray)
-            X[i] = [gray, dog, lbp]
-            # Store class
-            y[i] = self.labels[idx]
+            try:
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                dog = calc_dog(gray)
+                lbp = calc_lbp(gray)
+                X[i] = [gray, dog, lbp]
+                # Store class
+                y[i] = self.labels[idx]
+            except:
+                pass
 
         return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
