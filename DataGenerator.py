@@ -3,9 +3,12 @@ import numpy as np
 import keras
 from difference_of_gaussian import calc_dog
 from lbp_extraction import calc_lbp
+
+
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, list_IDs, labels, batch_size=32, dim=(256,256), n_channels=3,
+
+    def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=3,
                  n_classes=10, shuffle=True):
         'Initialization'
         self.dim = dim
@@ -24,7 +27,7 @@ class DataGenerator(keras.utils.Sequence):
     def __getitem__(self, index):
         'Generate one batch of data'
         # Generate indexes of the batch
-        indexes = self.indexes[index*self.batch_size:(index+1)*self.batch_size]
+        indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
 
         # Find list of IDs
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
@@ -41,7 +44,7 @@ class DataGenerator(keras.utils.Sequence):
             np.random.shuffle(self.indexes)
 
     def __data_generation(self, list_IDs_temp):
-        'Generates data containing batch_size samples' # X : (n_samples, *dim, n_channels)
+        'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
         X = np.empty(self.batch_size)
         y = np.empty(self.batch_size, dtype=int)

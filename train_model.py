@@ -9,11 +9,12 @@ import tqdm
 data = {'train': []}
 labels = {}
 
-TRAIN_DIR = 'result/'
+TRAIN_DIR = 'home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
 
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
+        print(path)
         data['train'].append(path)
         if path.split('/')[-1] == 'live':
             labels[path] = 1
