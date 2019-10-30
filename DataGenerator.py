@@ -52,6 +52,7 @@ class DataGenerator(keras.utils.Sequence):
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
             # Store sample
+            print(ID)
             img = cv2.imread(ID)
             idx = self.list_IDs.index(ID)
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
