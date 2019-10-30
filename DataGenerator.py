@@ -55,6 +55,7 @@ class DataGenerator(keras.utils.Sequence):
             print(ID)
             img = cv2.imread(ID)
             idx = self.list_IDs.index(ID)
+            print('idx= ' + str(idx))
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 dog = calc_dog(gray)
@@ -62,6 +63,7 @@ class DataGenerator(keras.utils.Sequence):
                 X[i] = [gray, dog, lbp]
                 # Store class
                 y[i] = self.labels[idx]
+                print('y[i] = ' + str(y[i]))
             except cv2.error as e:
                 print(e)
                 print('skipping id')
