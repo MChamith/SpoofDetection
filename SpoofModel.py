@@ -51,5 +51,5 @@ def cnn_model():
     return model
 
 
-model = cnn_model()
-print(model.summary())
+# model = cnn_model()
+# print(model.summary())

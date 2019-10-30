@@ -1,7 +1,7 @@
 import fnmatch
 
-# import DataGenerator
-# from SpoofModel import cnn_model
+from DataGenerator import DataGenerator
+from SpoofModel import cnn_model
 import json
 import os
 import tqdm
@@ -24,13 +24,15 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
             data['label'].append(0)
             print('path ' + str(path) + ' label 0')
 
-#       img = image.load_img(path, target_size=(128,128), grayscale = True)
-#       img_array = image.img_to_array(img)
-#       train_data.append(np.array(img_array))
+params = {'dim': (16,128,128),
+          'batch_size': 1,
+          'n_channels': 1,
+          'shuffle': False}
 
-#   np.save('training_data.npy' , train_data)
+train_gen = DataGenerator(**params, list_IDs=data['train'])
 
-print(data['label'])
+for i in train_gen:
+    print(i)
 # path = 'home/ec2-user/dataset/SIWFaces/SiW_release/Train/live/003/1231.jpg'
 # print(path.split('/')[-3])
 # with open('data.txt', 'w') as file:
