@@ -29,7 +29,7 @@ params = {'dim': (16,128,128),
           'n_channels': 1,
           'shuffle': False}
 
-train_gen = DataGenerator(**params, list_IDs=data['train'])
+train_gen = DataGenerator(**params, list_IDs=data['train'], labels=data['label'])
 
 for i in train_gen:
     print(i)
