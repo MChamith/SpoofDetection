@@ -48,7 +48,7 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X = np.empty((self.batch_size, self.n_channels))
+        X = np.empty(self.batch_size, dtype=object)
         y = np.empty(self.batch_size, dtype=int)
 
         # Generate data
@@ -65,7 +65,7 @@ class DataGenerator(keras.utils.Sequence):
                 print('dog')
                 lbp = calc_lbp(img)
                 print('lbped')
-                X[i, ] = [gray, dog, lbp]
+                X[i] = [gray, dog, lbp]
                 # Store class
                 y[i] = self.labels[idx]
                 print('y[i] = ' + str(y[i]))
