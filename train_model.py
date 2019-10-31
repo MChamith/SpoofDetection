@@ -24,9 +24,9 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
             data['label'].append(0)
             print('path ' + str(path) + ' label 0')
 
-params = {'dim': (16,128,128),
-          'batch_size': 8,
-          'n_channels': 1,
+params = {'dim': (256,256),
+          'batch_size': 32,
+          'n_channels': 3,
           'shuffle': False}
 
 train_gen = DataGenerator(**params, list_IDs=data['train'], labels=data['label'])
