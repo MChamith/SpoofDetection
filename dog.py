@@ -3,7 +3,7 @@ import cv2
 import os
 import fnmatch
 
-TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
+TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Test/'
 full_count = 0
 delete_count = 0
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
