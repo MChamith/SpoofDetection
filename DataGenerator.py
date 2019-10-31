@@ -68,9 +68,10 @@ class DataGenerator(keras.utils.Sequence):
                 X[i] = [gray, dog, lbp]
                 # Store class
                 y[i] = self.labels[idx]
-                print('y[i] = ' + str(y[i]))
+                print('y['+str(i)+']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
                 print('skipping id')
                 continue
+        print(y)
         return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
