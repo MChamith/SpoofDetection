@@ -27,6 +27,7 @@ class DataGenerator(keras.utils.Sequence):
     def __getitem__(self, index):
         'Generate one batch of data'
         # Generate indexes of the batch
+        print(index)
         indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
         print('indexes ' + str(indexes))
         # Find list of IDs
@@ -34,7 +35,13 @@ class DataGenerator(keras.utils.Sequence):
         print(list_IDs_temp)
 
         # Generate data
-        X, y = self.__data_generation(list_IDs_temp)
+        try:
+            X, y = self.__data_generation(list_IDs_temp)
+        except IndexError as e:
+            print('no faces')
+            print('error ' + str(e))
+            index = index +1
+            self.__getitem__(index)
 
         return X, y
 
@@ -68,4 +75,5 @@ class DataGenerator(keras.utils.Sequence):
             except cv2.error as e:
                 print(e)
                 print('skipping id')
+                continue
         return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
