@@ -25,7 +25,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
             print('path ' + str(path) + ' label 0')
 
 params = {'dim': (16,128,128),
-          'batch_size': 1,
+          'batch_size': 8,
           'n_channels': 1,
           'shuffle': False}
 
