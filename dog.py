@@ -12,7 +12,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         print('path ' + str(path))
         img = cv2.imread(path)
         full_count += 1
-        print(full_count)
+        print('full count ' + str(full_count))
         try:
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         except cv2.error as e:
@@ -20,7 +20,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
             os.remove(path)
             print('removed ' + str(path))
             delete_count +=1
-            print(delete_count)
+            print('delete count  ' + str(delete_count))
             continue
 # matplotlib.use('TkAgg')
 # filename = 'videos/live/003/003-1-1-1-1.mov'
