@@ -60,8 +60,11 @@ class DataGenerator(keras.utils.Sequence):
             print('idx= ' + str(idx))
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                print('converted to gray')
                 dog = calc_dog(gray)
+                print('dog')
                 lbp = calc_lbp(gray)
+                print('lbped')
                 X[i] = [gray, dog, lbp]
                 # Store class
                 y[i] = self.labels[idx]
