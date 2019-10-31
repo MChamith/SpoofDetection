@@ -67,6 +67,4 @@ class DataGenerator(keras.utils.Sequence):
             except cv2.error as e:
                 print(e)
                 print('skipping id')
-                continue
-
         return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
