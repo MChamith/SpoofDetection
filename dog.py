@@ -4,16 +4,23 @@ import os
 import fnmatch
 
 TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
-
+full_count = 0
+delete_count = 0
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
+        print('path ' + str(path))
         img = cv2.imread(path)
+        full_count += 1
+        print(full_count)
         try:
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         except cv2.error as e:
             print(e)
             os.remove(path)
+            print('removed ' + str(path))
+            delete_count +=1
+            print(delete_count)
             continue
 # matplotlib.use('TkAgg')
 # filename = 'videos/live/003/003-1-1-1-1.mov'
