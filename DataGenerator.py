@@ -63,7 +63,7 @@ class DataGenerator(keras.utils.Sequence):
                 print('converted to gray')
                 dog = calc_dog(gray)
                 print('dog')
-                lbp = calc_lbp(gray)
+                lbp = calc_lbp(img)
                 print('lbped')
                 X[i] = [gray, dog, lbp]
                 # Store class
