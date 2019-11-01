@@ -16,6 +16,7 @@ TRAIN_DIR = '/home/ubuntu/data/SiW_release/Train/'
 TEST_DIR = '/home/ubuntu/data/SiW_release/Test/'
 
 # create training data in
+print('collecting training data')
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
@@ -23,12 +24,12 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         data['X_train'].append(path)
         if path.split('/')[-3] == 'live':
             data['label'].append(1)
-            print('path ' + str(path) + ' label 1')
         elif path.split('/')[-3] == 'spoof':
             data['label'].append(0)
-            print('path ' + str(path) + ' label 0')
+
 
 count = 0
+print('collecting validation and test data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
@@ -44,25 +45,24 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
                 test_data['test_label'].append(1)
             elif path.split('/')[-3] == 'spoof':
                 test_data['test_label'].append(0)
-
+print('shuffling data')
 data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
 test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test_data['test_label'])
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
-
+print('data shuffled')
 params = {'dim': (256, 256),
           'batch_size': 32,
           'n_channels': 3,
           'shuffle': False}
 
 train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
-for i in train_gen:
-    print(i)
 val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
 model = cnn_model()
+print('compiling model')
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
-
+print('model compiled')
 file_path = 'Checkpoint'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
