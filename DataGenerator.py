@@ -27,12 +27,12 @@ class DataGenerator(keras.utils.Sequence):
     def __getitem__(self, index):
         'Generate one batch of data'
         # Generate indexes of the batch
-        print(index)
+        # print(index)
         indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
-        print('indexes ' + str(indexes))
+        # print('indexes ' + str(indexes))
         # Find list of IDs
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
-        print(list_IDs_temp)
+        # print(list_IDs_temp)
 
         # Generate data
 
@@ -56,17 +56,17 @@ class DataGenerator(keras.utils.Sequence):
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
             # Store sample
-            print(ID)
+            # print(ID)
             img = cv2.imread(ID)
             idx = self.list_IDs.index(ID)
-            print('idx= ' + str(idx))
+            # print('idx= ' + str(idx))
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                print('converted to gray')
+                # print('converted to gray')
                 dog = calc_dog(gray)
-                print('dog')
+                # print('dog')
                 lbp = calc_lbp(img)
-                print('lbped')
+                # print('lbped')
                 gray_img = cv2.resize(gray, (256, 256))
                 gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
@@ -76,10 +76,10 @@ class DataGenerator(keras.utils.Sequence):
                 X_lbp[i] = lbp
                 # Store class
                 y[i] = self.labels[idx]
-                print('y[' + str(i) + ']= ' + str(y[i]))
+                # print('y[' + str(i) + ']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
-                print('skipping id')
+                # print('skipping id')
                 continue
         # print(X.shape)
         return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
