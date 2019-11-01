@@ -51,7 +51,7 @@ class DataGenerator(keras.utils.Sequence):
         X_gray = np.empty((self.batch_size, 256, 256, 1))
         X_dog = np.empty((self.batch_size, 256, 256, 1))
         X_lbp = np.empty((self.batch_size, 256, 256, 1))
-        y = np.empty(self.batch_size, dtype=int)
+        y = np.empty((self.batch_size), dtype=int)
 
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
