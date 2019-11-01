@@ -48,9 +48,9 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X_gray = np.empty(self.batch_size,self.dim, 1)
-        X_dog = np.empty(self.batch_size,self.dim, 1)
-        X_lbp = np.empty(self.batch_size,self.dim, 1)
+        X_gray = np.empty((self.batch_size, 256, 256, 1))
+        X_dog = np.empty((self.batch_size, 256, 256, 1))
+        X_lbp = np.empty((self.batch_size, 256, 256, 1))
         y = np.empty(self.batch_size, dtype=int)
 
         # Generate data
@@ -72,7 +72,7 @@ class DataGenerator(keras.utils.Sequence):
                 X_lbp[i] = lbp
                 # Store class
                 y[i] = self.labels[idx]
-                print('y['+str(i)+']= ' + str(y[i]))
+                print('y[' + str(i) + ']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
                 print('skipping id')
