@@ -36,8 +36,8 @@ class DataGenerator(keras.utils.Sequence):
 
         # Generate data
 
-        X, y = self.__data_generation(list_IDs_temp)
-        return X, y
+        # [X_g, y = self.__data_generation(list_IDs_temp)
+        return self.__data_generation(list_IDs_temp)
 
     def on_epoch_end(self):
         'Updates indexes after each epoch'
@@ -48,7 +48,9 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X = np.empty((self.batch_size, self.n_channels), dtype=object)
+        X_gray = np.empty(self.batch_size)
+        X_dog = np.empty(self.batch_size)
+        X_lbp = np.empty(self.batch_size)
         y = np.empty(self.batch_size, dtype=int)
 
         # Generate data
@@ -65,9 +67,9 @@ class DataGenerator(keras.utils.Sequence):
                 print('dog')
                 lbp = calc_lbp(img)
                 print('lbped')
-                X[i, 0] = gray
-                X[i, 1] = dog
-                X[i, 2] = lbp
+                X_gray[i] = gray
+                X_dog[i] = dog
+                X_lbp[i] = lbp
                 # Store class
                 y[i] = self.labels[idx]
                 print('y['+str(i)+']= ' + str(y[i]))
@@ -75,5 +77,5 @@ class DataGenerator(keras.utils.Sequence):
                 print(e)
                 print('skipping id')
                 continue
-        print(X.shape)
-        return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
+        # print(X.shape)
+        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
