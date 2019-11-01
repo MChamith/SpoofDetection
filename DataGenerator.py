@@ -67,7 +67,8 @@ class DataGenerator(keras.utils.Sequence):
                 print('dog')
                 lbp = calc_lbp(img)
                 print('lbped')
-                X_gray[i] = gray
+                gray_img = cv2.resize(gray, (256, 256))
+                X_gray[i] = gray_img
                 X_dog[i] = dog
                 X_lbp[i] = lbp
                 # Store class
