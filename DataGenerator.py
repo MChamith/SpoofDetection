@@ -59,7 +59,7 @@ class DataGenerator(keras.utils.Sequence):
 
             img = cv2.imread(ID)
             idx = self.list_IDs.index(ID)
-            print('id' + str(ID) +'label ' + self.labels[idx])
+            print('id' + str(ID) +'label ' + str(self.labels[idx]))
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 # print('converted to gray')
@@ -81,5 +81,8 @@ class DataGenerator(keras.utils.Sequence):
                 print(e)
                 # print('skipping id')
                 continue
-        # print(X.shape)
+        print('yyy = ' +str(keras.utils.to_categorical(y, num_classes=self.n_classes)))
+        print('X_gray = ' + str(X_gray))
+        print('X_dog = ' + str(X_dog))
+        print('X_lbp = ' + str(X_lbp))
         return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
