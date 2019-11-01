@@ -48,7 +48,7 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X = np.empty(self.batch_size, dtype=object)
+        X = np.empty(self.batch_size, self.n_channels)
         y = np.empty(self.batch_size, dtype=int)
 
         # Generate data
@@ -65,7 +65,9 @@ class DataGenerator(keras.utils.Sequence):
                 print('dog')
                 lbp = calc_lbp(img)
                 print('lbped')
-                X[i] = [gray, dog, lbp]
+                X[i, 1] = gray
+                X[i, 2] = dog
+                X[i, 3] = lbp
                 # Store class
                 y[i] = self.labels[idx]
                 print('y['+str(i)+']= ' + str(y[i]))
@@ -73,5 +75,5 @@ class DataGenerator(keras.utils.Sequence):
                 print(e)
                 print('skipping id')
                 continue
-        print(y)
+        print(X.shape)
         return X, keras.utils.to_categorical(y, num_classes=self.n_classes)
