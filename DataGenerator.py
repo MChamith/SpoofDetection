@@ -68,6 +68,7 @@ class DataGenerator(keras.utils.Sequence):
                 lbp = calc_lbp(img)
                 print('lbped')
                 gray_img = cv2.resize(gray, (256, 256))
+                gray_img = np.expand_dims(gray_img, axis=-1)
                 X_gray[i] = gray_img
                 X_dog[i] = dog
                 X_lbp[i] = lbp
