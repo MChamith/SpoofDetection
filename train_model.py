@@ -16,8 +16,8 @@ data = {'X_train': [], 'label': []}
 test_data = {'X_val': [], 'val_label': [], 'X_test': [], 'test_label': []}
 # labels = {'spoof':[]}
 
-TRAIN_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Train/'
-TEST_DIR = '/home/ec2-user/dataset/SIWFaces/SiW_release/Test/'
+TRAIN_DIR = '/home/ubuntu/data/SiW_release/Train/'
+TEST_DIR = '/home/ubuntu/data/SiW_release/Test/'
 
 # create training data in
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
