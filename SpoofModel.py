@@ -45,7 +45,7 @@ def cnn_model():
     X = Flatten()(X)
     X = Dense(256, activation='relu')(X)
     X = Dense(128, activation='relu')(X)
-    X = Dense(1, activation='sigmoid')(X)
+    X = Dense(2, activation='sigmoid')(X)
     model = Model(inputs=[input_img1, input_img2, input_img3],  outputs=X)
 
     return model
