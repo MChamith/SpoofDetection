@@ -82,4 +82,4 @@ class DataGenerator(keras.utils.Sequence):
                 print('skipping id')
                 continue
         # print(X.shape)
-        return X_gray, X_dog, X_lbp, keras.utils.to_categorical(y, num_classes=self.n_classes)
+        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
