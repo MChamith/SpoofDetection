@@ -48,9 +48,9 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X_gray = np.empty(self.batch_size, dtype=object)
-        X_dog = np.empty(self.batch_size, dtype=object)
-        X_lbp = np.empty(self.batch_size, dtype=object)
+        X_gray = np.empty(self.batch_size,self.dim, 1)
+        X_dog = np.empty(self.batch_size,self.dim, 1)
+        X_lbp = np.empty(self.batch_size,self.dim, 1)
         y = np.empty(self.batch_size, dtype=int)
 
         # Generate data
@@ -78,4 +78,4 @@ class DataGenerator(keras.utils.Sequence):
                 print('skipping id')
                 continue
         # print(X.shape)
-        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
+        return X_gray, X_dog, X_lbp, keras.utils.to_categorical(y, num_classes=self.n_classes)
