@@ -65,9 +65,9 @@ class DataGenerator(keras.utils.Sequence):
                 print('dog')
                 lbp = calc_lbp(img)
                 print('lbped')
-                X[i, 1] = gray
-                X[i, 2] = dog
-                X[i, 3] = lbp
+                X[i, 0] = gray
+                X[i, 1] = dog
+                X[i, 2] = lbp
                 # Store class
                 y[i] = self.labels[idx]
                 print('y['+str(i)+']= ' + str(y[i]))
