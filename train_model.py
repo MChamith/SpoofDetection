@@ -4,7 +4,6 @@ import keras
 from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
 import os
-import tqdm
 import numpy as np
 from sklearn.utils import shuffle
 from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
