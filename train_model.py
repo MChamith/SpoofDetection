@@ -1,11 +1,8 @@
 import fnmatch
 
 import keras
-import tf as tf
-
 from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
-import json
 import os
 import tqdm
 import numpy as np
