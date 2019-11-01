@@ -71,9 +71,9 @@ class DataGenerator(keras.utils.Sequence):
                 gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)
-                X_gray[i] = gray_img
-                X_dog[i] = dog
-                X_lbp[i] = lbp
+                X_gray[i] = gray_img.astype('float32')/255
+                X_dog[i] = dog.astype('float32')/255
+                X_lbp[i] = lbp.astype('float32')/255
                 # Store class
                 y[i] = self.labels[idx]
                 # print('y[' + str(i) + ']= ' + str(y[i]))
