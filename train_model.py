@@ -45,6 +45,7 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
                 test_data['test_label'].append(1)
             elif path.split('/')[-3] == 'spoof':
                 test_data['test_label'].append(0)
+        count += 1
 print('shuffling data')
 data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
 test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test_data['test_label'])
