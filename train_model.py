@@ -76,5 +76,6 @@ model_history = model.fit_generator(generator=train_gen,
                                     validation_data=val_generator,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
-                                    shuffle=False
+                                    shuffle=False,
+                                    use_multiprocessing=True
                                     )
