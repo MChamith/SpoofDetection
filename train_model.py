@@ -77,5 +77,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
                                     shuffle=True,
-                                    use_multiprocessing=True, steps_per_epoch=10
+                                    use_multiprocessing=True, steps_per_epoch=1000
                                     )
