@@ -3,13 +3,14 @@ import numpy as np
 import keras
 from difference_of_gaussian import calc_dog
 from lbp_extraction import calc_lbp
+from sklearn.utils import shuffle
 
 
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
 
     def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=3,
-                 n_classes=2, shuffle=False):
+                 n_classes=2, shuffle=True):
         'Initialization'
         self.dim = dim
         self.batch_size = batch_size
@@ -42,8 +43,8 @@ class DataGenerator(keras.utils.Sequence):
     def on_epoch_end(self):
         'Updates indexes after each epoch'
         self.indexes = np.arange(len(self.list_IDs))
-        if self.shuffle == True:
-            np.random.shuffle(self.indexes)
+        if self.shuffle:
+            shuffle(self.list_IDs, self.labels)
 
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
@@ -71,11 +72,14 @@ class DataGenerator(keras.utils.Sequence):
                 gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)
-                X_gray[i] = gray_img.astype('float32')/255
-                X_dog[i] = dog.astype('float32')/255
-                X_lbp[i] = lbp.astype('float32')/255
+                X_gray[i] = gray_img.astype('float32') / 255
+                X_dog[i] = dog.astype('float32') / 255
+                X_lbp[i] = lbp.astype('float32') / 255
                 # Store class
                 y[i] = self.labels[idx]
+
+                with open('log.txt', 'w') as lf:
+                    lf.write('ID ' + str(ID) + ' label ' + str(y[i]))
                 # print('y[' + str(i) + ']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
