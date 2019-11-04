@@ -60,23 +60,26 @@ train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label
 val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
-model = cnn_model()
-print('compiling model')
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
-print('model compiled')
-file_path = 'Checkpoint/Model-{epoch:02d}.h5'
-check_pointer = ModelCheckpoint(filepath=file_path)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-                              patience=1, min_lr=0.00001)
-early_stop = EarlyStopping(patience=2)
-tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
-                                                write_graph=True, write_images=True)
+for i in val_generator:
+    print(i)
 
-model_history = model.fit_generator(generator=train_gen,
-                                    epochs=100,
-                                    validation_data=val_generator,
-                                    callbacks=[check_pointer,
-                                               reduce_lr, tensorboard_keras, early_stop],
-                                    shuffle=True,
-                                    use_multiprocessing=True, steps_per_epoch=500
-                                    )
+# model = cnn_model()
+# print('compiling model')
+# model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
+# print('model compiled')
+# file_path = 'Checkpoint/Model-{epoch:02d}.h5'
+# check_pointer = ModelCheckpoint(filepath=file_path)
+# reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
+#                               patience=1, min_lr=0.00001)
+# early_stop = EarlyStopping(patience=2)
+# tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
+#                                                 write_graph=True, write_images=True)
+#
+# model_history = model.fit_generator(generator=train_gen,
+#                                     epochs=100,
+#                                     validation_data=val_generator,
+#                                     callbacks=[check_pointer,
+#                                                reduce_lr, tensorboard_keras, early_stop],
+#                                     shuffle=True,
+#                                     use_multiprocessing=True, steps_per_epoch=500
+#                                     )
