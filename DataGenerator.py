@@ -43,6 +43,8 @@ class DataGenerator(keras.utils.Sequence):
     def on_epoch_end(self):
         'Updates indexes after each epoch'
         self.indexes = np.arange(len(self.list_IDs))
+        with open('log.txt', 'a') as lf:
+            lf.write('epoch end\n shuffling data\n')
         if self.shuffle:
             shuffle(self.list_IDs, self.labels)
 
@@ -78,8 +80,8 @@ class DataGenerator(keras.utils.Sequence):
                 # Store class
                 y[i] = self.labels[idx]
 
-                # with open('log.txt', 'w') as lf:
-                #     lf.write('ID ' + str(ID) + ' label ' + str(y[i]))
+                with open('log.txt', 'a') as lf:
+                    lf.write('ID ' + str(ID) + ' label ' + str(y[i])+'\n')
                 # print('y[' + str(i) + ']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
