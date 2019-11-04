@@ -51,7 +51,7 @@ test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
 params = {'dim': (256, 256),
-          'batch_size': 128,
+          'batch_size': 32,
           'n_channels': 3,
           'shuffle': False}
 
@@ -66,8 +66,8 @@ print('model compiled')
 file_path = 'Checkpoint'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-                              patience=2, min_lr=0.00001)
-early_stop = EarlyStopping(patience=3)
+                              patience=1, min_lr=0.00001)
+early_stop = EarlyStopping(patience=1)
 tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
                                                 write_graph=True, write_images=True)
 

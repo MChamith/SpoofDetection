@@ -8,7 +8,7 @@ from lbp_extraction import calc_lbp
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
 
-    def __init__(self, list_IDs, labels, batch_size=128, dim=(256, 256), n_channels=3,
+    def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=3,
                  n_classes=2, shuffle=False):
         'Initialization'
         self.dim = dim
