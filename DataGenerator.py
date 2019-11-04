@@ -78,8 +78,8 @@ class DataGenerator(keras.utils.Sequence):
                 # Store class
                 y[i] = self.labels[idx]
 
-                with open('log.txt', 'w') as lf:
-                    lf.write('ID ' + str(ID) + ' label ' + str(y[i]))
+                # with open('log.txt', 'w') as lf:
+                #     lf.write('ID ' + str(ID) + ' label ' + str(y[i]))
                 # print('y[' + str(i) + ']= ' + str(y[i]))
             except cv2.error as e:
                 print(e)
