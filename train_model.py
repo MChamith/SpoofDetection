@@ -57,7 +57,7 @@ params = {'dim': (256, 256),
           'shuffle': True}
 
 val_params = {'dim': (256, 256),
-          'batch_size': 8,
+          'batch_size': 16,
           'n_channels': 3,
           'shuffle': False}
 
@@ -83,5 +83,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
                                     shuffle=True,
-                                    steps_per_epoch=20, validation_steps=5
+                                    steps_per_epoch=1000, validation_steps=200
                                     )
