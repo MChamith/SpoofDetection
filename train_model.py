@@ -33,7 +33,7 @@ print('collecting validation and test data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        if count %2 == 0:
+        if count %50 == 0:
             test_data['X_val'].append(path)
             if path.split('/')[-3] == 'live':
                 test_data['val_label'].append(1)
