@@ -33,7 +33,7 @@ print('collecting validation and test data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        if count %500 == 0:
+        if count %10 == 0:
             test_data['X_val'].append(path)
             if path.split('/')[-3] == 'live':
                 test_data['val_label'].append(1)
@@ -57,7 +57,7 @@ params = {'dim': (256, 256),
           'shuffle': True}
 
 val_params = {'dim': (256, 256),
-          'batch_size': 32,
+          'batch_size': 8,
           'n_channels': 3,
           'shuffle': False}
 
@@ -83,5 +83,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
                                     shuffle=True,
-                                    steps_per_epoch=20
+                                    steps_per_epoch=20, validation_steps=5
                                     )
