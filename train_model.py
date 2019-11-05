@@ -57,7 +57,7 @@ params = {'dim': (256, 256),
           'shuffle': True}
 
 val_params = {'dim': (256, 256),
-          'batch_size': 8,
+          'batch_size': 32,
           'n_channels': 3,
           'shuffle': False}
 
