@@ -69,11 +69,11 @@ model = cnn_model()
 print('compiling model')
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
 print('model compiled')
-file_path = 'Checkpoint/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/SecondModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
-early_stop = EarlyStopping(patience=2)
+early_stop = EarlyStopping(patience=3)
 tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
                                                 write_graph=True, write_images=True)
 
