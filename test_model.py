@@ -10,13 +10,13 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 
 test_data = {'X_test': [], 'label': []}
 
-TEST_DIR = 'TestData/'
+TEST_DIR = '/home/ubuntu/SpoofDetection/TestData/'
 
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        # print(path)
+        # print(path.split('/')[-3])
         test_data['X_test'].append(path)
         if path.split('/')[-3] == 'live':
             test_data['label'].append(1)
