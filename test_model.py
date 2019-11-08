@@ -10,13 +10,13 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 
 test_data = {'X_test': [], 'label': []}
 
-TEST_DIR = '/home/ubuntu/SpoofDetection/TestData/'
+TEST_DIR = '/data/SiW_release/Data/'
 
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        print(path.split('/')[-3])
+        print(path)
         test_data['X_test'].append(path)
         if path.split('/')[-3] == 'live':
             test_data['label'].append(1)
@@ -31,6 +31,6 @@ params = {'dim': (256, 256),
 
 test_gen = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['label'])
 
-model = keras.models.load_model('Models/Model-03.h5')
+model = keras.models.load_model('Checkpoint/Model-03.h5')
 metrics = model.evaluate_generator(generator=test_gen)
 print('test loss, test accuracy ' + str(metrics))
