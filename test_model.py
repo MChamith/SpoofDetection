@@ -25,7 +25,7 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
 
 test_data['X_test'], test_data['label'] = shuffle(test_data['X_test'], test_data['label'])
 params = {'dim': (256, 256),
-          'batch_size': 1,
+          'batch_size': 8,
           'n_channels': 3,
           'shuffle': True}
 
