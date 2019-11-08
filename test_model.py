@@ -10,7 +10,7 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 
 test_data = {'X_test': [], 'label': []}
 
-TEST_DIR = '/data/SiW_release/Data/'
+TEST_DIR = '/data/SiW_release/Data/Test'
 
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
