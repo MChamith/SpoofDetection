@@ -32,5 +32,5 @@ params = {'dim': (256, 256),
 test_gen = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['label'])
 
 model = keras.models.load_model('Checkpoint/Model-03.h5')
-metrics = model.evaluate_generator(generator=test_gen)
+metrics = model.evaluate_generator(generator=test_gen, steps=len(test_data['X_test']))
 print('test loss, test accuracy ' + str(metrics))
