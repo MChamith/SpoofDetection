@@ -18,7 +18,7 @@ count = 0
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        if count%20 == 0:
+        if count%80 == 0:
             test_data['X_test'].append(path)
             if path.split('/')[-3] == 'live':
                 test_data['label'].append(1)
