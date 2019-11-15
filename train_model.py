@@ -12,8 +12,8 @@ data = {'X_train': [], 'label': []}
 test_data = {'X_val': [], 'val_label': [], 'X_test': [], 'test_label': []}
 # labels = {'spoof':[]}
 
-TRAIN_DIR = '/data/SiW_release/Train/'
-TEST_DIR = '/data/SiW_release/Test/'
+TRAIN_DIR = '/home/ubuntu/volume/SiW_release/Train/'
+TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 
 # create training data in
 print('collecting training data')
