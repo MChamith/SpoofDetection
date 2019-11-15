@@ -61,6 +61,8 @@ class DataGenerator(keras.utils.Sequence):
             # Store sample
 
             img = cv2.imread(ID)
+            img = cv2.resize(img, (256, 256))
+            img = np.expand_dims(img, axis=-1)
             idx = self.list_IDs.index(ID)
             # print('id' + str(ID) +'label ' + str(self.labels[idx]))
             try:
