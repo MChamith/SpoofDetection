@@ -10,18 +10,20 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 
 test_data = {'X_test': [], 'label': []}
 
-TEST_DIR = '/data/SiW_release/Test'
+TEST_DIR = '/home/ubuntu/volume/home/ubuntu/SpoofDetection/Data'
+MODEL_DIR = '/home/ubuntu/volume/home/ubuntu/SpoofDetection/Models'
 
-print('collecting training data')
+print('collecting test data')
+count = 0
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
-        print(path)
-        test_data['X_test'].append(path)
-        if path.split('/')[-3] == 'live':
-            test_data['label'].append(1)
-        elif path.split('/')[-3] == 'spoof':
-            test_data['label'].append(0)
+        if count%20 == 0:
+            test_data['X_test'].append(path)
+            if path.split('/')[-3] == 'live':
+                test_data['label'].append(1)
+            elif path.split('/')[-3] == 'spoof':
+                test_data['label'].append(0)
 
 test_data['X_test'], test_data['label'] = shuffle(test_data['X_test'], test_data['label'])
 params = {'dim': (256, 256),
@@ -31,6 +33,16 @@ params = {'dim': (256, 256),
 
 test_gen = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['label'])
 
-model = keras.models.load_model('Checkpoint/Model-03.h5')
-metrics = model.evaluate_generator(generator=test_gen, steps=len(test_data['X_test']), verbose=1)
-print('test loss, test accuracy ' + str(metrics))
+for root, dirnames, filenames in os.walk(MODEL_DIR):
+    for filename in fnmatch.filter(filenames, "*.h5"):
+        path = os.path.join(root, filename)
+        model = keras.models.load_model(path)
+        metrics = model.evaluate_generator(generator=test_gen, steps=len(test_data['X_test']), verbose=1)
+        with open('result.txt' , 'a') as file:
+            file.write('Model ' + str(path)+ '\n')
+            file.write('test loss, test accuracy ' + str(metrics) + '\n')
+        print('test loss, test accuracy ' + str(metrics))
+
+
+
+
