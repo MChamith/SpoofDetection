@@ -1,6 +1,8 @@
 import fnmatch
 
 import keras
+from keras import optimizers
+
 from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
 import os
@@ -67,7 +69,8 @@ test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=te
 
 model = cnn_model()
 print('compiling model')
-model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['acc'])
+sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
 file_path = 'Checkpoint/StochModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
