@@ -10,7 +10,7 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 import os
 
 
-res_model = ResNet50(include_top=False, weights='imagenet', input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
+res_model = ResNet50(include_top=False, weights=None, input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
 x = res_model.output
 
 x = GlobalAveragePooling2D()(x)
@@ -84,7 +84,6 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
 early_stop = EarlyStopping(patience=3)
 tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
                                                 write_graph=True, write_images=True)
-
 model_history = model.fit_generator(generator=train_gen,
                                     epochs=100,
                                     validation_data=val_generator,
