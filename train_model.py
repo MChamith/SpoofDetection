@@ -52,7 +52,7 @@ test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
 params = {'dim': (256, 256),
-          'batch_size': 32,
+          'batch_size': 1,
           'n_channels': 3,
           'shuffle': True}
 
@@ -69,11 +69,11 @@ model = cnn_model()
 print('compiling model')
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
 print('model compiled')
-file_path = 'Checkpoint/ThirdModel/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/StochModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
-early_stop = EarlyStopping(patience=3)
+early_stop = EarlyStopping(patience=2)
 tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
                                                 write_graph=True, write_images=True)
 
@@ -83,5 +83,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
                                     shuffle=True,
-                                    steps_per_epoch=2000, validation_steps=20
+                                    validation_steps=20
                                     )

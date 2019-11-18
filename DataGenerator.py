@@ -51,12 +51,12 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        # X_gray = np.empty((self.batch_size, 256, 256, 1))
-        # X_dog = np.empty((self.batch_size, 256, 256, 1))
-        # X_lbp = np.empty((self.batch_size, 256, 256, 1))
+        X_gray = np.empty((self.batch_size, 256, 256, 1))
+        X_dog = np.empty((self.batch_size, 256, 256, 1))
+        X_lbp = np.empty((self.batch_size, 256, 256, 1))
 
         # for resnet
-        X = np.empty((self.batch_size, 224, 224, 3))
+        # X = np.empty((self.batch_size, 224, 224, 3))
         y = np.empty((self.batch_size), dtype=int)
 
         # Generate data
@@ -64,26 +64,26 @@ class DataGenerator(keras.utils.Sequence):
             # Store sample
 
             img = cv2.imread(ID)
-            img = cv2.resize(img, (224, 224))
+            img = cv2.resize(img, (256, 256))
             # img = np.expand_dims(img, axis=-1)
             idx = self.list_IDs.index(ID)
             # print('id' + str(ID) +'label ' + str(self.labels[idx]))
             try:
-                # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 # print('converted to gray')
-                # dog = calc_dog(gray)
+                dog = calc_dog(gray)
                 # print('dog')
-                # lbp = calc_lbp(img)
+                lbp = calc_lbp(img)
                 # print('lbped')
                 # gray_img = cv2.resize(gray, (256, 256))
-                # gray_img = np.expand_dims(gray_img, axis=-1)
-                # dog = np.expand_dims(dog, axis=-1)
-                # lbp = np.expand_dims(lbp, axis=-1)
-                # X_gray[i] = gray_img.astype('float32') / 255
-                # X_dog[i] = dog.astype('float32') / 255
-                # X_lbp[i] = lbp.astype('float32') / 255
+                gray_img = np.expand_dims(gray, axis=-1)
+                dog = np.expand_dims(dog, axis=-1)
+                lbp = np.expand_dims(lbp, axis=-1)
+                X_gray[i] = gray_img.astype('float32') / 255
+                X_dog[i] = dog.astype('float32') / 255
+                X_lbp[i] = lbp.astype('float32') / 255
                 # Store class
-                X[i] = img
+                # X[i] = img
 
                 y[i] = self.labels[idx]
 
@@ -99,4 +99,4 @@ class DataGenerator(keras.utils.Sequence):
         # print('X_dog = ' + str(X_dog))
         # print('X_lbp = ' + str(X_lbp))
         # return [X_gray, X_dog, X_lbp], y
-        return X, y
+        return [X_gray, X_dog, X_lbp], y
