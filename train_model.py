@@ -54,7 +54,7 @@ test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
 params = {'dim': (256, 256),
-          'batch_size': 1,
+          'batch_size': 32,
           'n_channels': 3,
           'shuffle': True}
 
