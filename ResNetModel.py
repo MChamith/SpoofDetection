@@ -1,6 +1,7 @@
 import keras
 from keras import Model
 from keras.applications.resnet50 import ResNet50
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.layers import GlobalAveragePooling2D, Dense, MaxPooling1D, GlobalAveragePooling1D
 
 from DataGenerator import DataGenerator
@@ -10,16 +11,16 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 import os
 
 
-res_model = ResNet50(include_top=False, weights=None, input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
+res_model = InceptionResNetV2(include_top=False, weights=None, input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
 x = res_model.output
 
 x = GlobalAveragePooling2D()(x)
-x = Dense(1024, activation='relu')(x)
+# x = Dense(1024, activation='relu')(x)
 x = Dense(256, activation='relu')(x)
 
 x = Dense(1, activation='sigmoid')(x)
 model = Model(inputs = res_model.input, outputs = x)
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
 # print(model.summary())
 data = {'X_train': [], 'label': []}
 test_data = {'X_val': [], 'val_label': [], 'X_test': [], 'test_label': []}
@@ -75,7 +76,7 @@ val_params = {'dim': (224, 224),
           'shuffle': False}
 
 train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
-val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
+val_generator = DataGenerator(**val_params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 
 file_path = 'Checkpoint/ResModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
