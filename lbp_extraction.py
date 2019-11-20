@@ -12,7 +12,7 @@ def calc_lbp(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
                                        1, method="default")
-    # lbp = cv2.resize(lbp, (256, 256))
+    lbp = cv2.resize(lbp, (256, 256))
     return lbp
 # matplotlib.use('TkAgg')
 # filename = 'videos/live/003/003-1-1-1-1.mov'

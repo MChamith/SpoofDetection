@@ -64,7 +64,7 @@ class DataGenerator(keras.utils.Sequence):
             # Store sample
 
             img = cv2.imread(ID)
-            img = cv2.resize(img, (256, 256))
+            # img = cv2.resize(img, (256, 256))
             # img = cv2.resize(img, (224, 224))   # resnet
             # img = np.expand_dims(img, axis=-1)
             idx = self.list_IDs.index(ID)
@@ -76,8 +76,8 @@ class DataGenerator(keras.utils.Sequence):
                 # print('dog')
                 lbp = calc_lbp(img)
                 # print('lbped')
-                # gray_img = cv2.resize(gray, (256, 256))
-                gray_img = np.expand_dims(gray, axis=-1)
+                gray_img = cv2.resize(gray, (256, 256))
+                gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)
                 X_gray[i] = gray_img.astype('float32') / 255
