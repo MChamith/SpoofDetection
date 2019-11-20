@@ -60,7 +60,7 @@ def cnn_model():
     # X = Dense(128, activation='relu')(X)
     # X = Dense(64, activation='relu')(X)
     # print('before ' +str(X.shape))
-    X = Dense(2, activation='sigmoid')(X)
+    X = Dense(1, activation='sigmoid')(X)
     # print('after ' + str(X.shape))
     model = Model(inputs=[input_img1, input_img2, input_img3],  outputs=X)
 
