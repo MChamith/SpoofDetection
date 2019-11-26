@@ -69,9 +69,9 @@ test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=te
 model = cnn_model()
 print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['binary_accuracy'])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/SGDModel1/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/NewLBP/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
@@ -85,5 +85,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop],
                                     shuffle=True,
-                                    validation_steps=200
+                                    steps_per_epoch=1000, validation_steps=50
                                     )

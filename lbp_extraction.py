@@ -9,11 +9,22 @@ import cv2
 
 
 def calc_lbp(img):
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
-                                       1, method="default")
+    # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    lbp = feature.local_binary_pattern(img_gray, 8, 1, method='default')
+    lbp = lbp.astype('uint8')
+    # lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
+    #                                    1, method="default")
     lbp = cv2.resize(lbp, (256, 256))
     return lbp
+
+# img = cv2.imread('003-1-3-4-131.jpg')
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# lbp = feature.local_binary_pattern(img_gray, 8,1,method='default')
+# print(lbp)
+# lbp = np.expand_dims(lbp, axis=-1)
+# cv2.imshow('lbp', lbp.astype('uint8'))
+# cv2.waitKey(0)
 # matplotlib.use('TkAgg')
 # filename = 'videos/live/003/003-1-1-1-1.mov'
 # # original_image = img_as_float(Image.open())
