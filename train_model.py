@@ -4,7 +4,7 @@ import keras
 from keras import optimizers
 
 from DataGenerator import DataGenerator
-from SpoofModel import cnn_model
+from LBPModel import cnn_model
 import os
 import numpy as np
 from sklearn.utils import shuffle
@@ -71,7 +71,7 @@ print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/NewLBP/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/LBPModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)

@@ -10,8 +10,8 @@ import cv2
 
 def calc_lbp(img):
     # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    lbp = feature.local_binary_pattern(img_gray, 8, 1, method='default')
+    # img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    lbp = feature.local_binary_pattern(img, 8, 1, method='default')
     lbp = lbp.astype('uint8')
     # lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
     #                                    1, method="default")
