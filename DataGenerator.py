@@ -51,7 +51,7 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X_gray = np.empty((self.batch_size, 256, 256, 1))
+        # X_gray = np.empty((self.batch_size, 256, 256, 1))
         X_dog = np.empty((self.batch_size, 256, 256, 1))
         X_lbp = np.empty((self.batch_size, 256, 256, 1))
 
@@ -74,13 +74,13 @@ class DataGenerator(keras.utils.Sequence):
                 # print('converted to gray')
                 dog = calc_dog(gray)
                 # print('dog')
-                lbp = calc_lbp(img)
+                lbp = calc_lbp(gray)
                 # print('lbped')
-                gray_img = cv2.resize(gray, (256, 256))
-                gray_img = np.expand_dims(gray_img, axis=-1)
+                # gray_img = cv2.resize(gray, (256, 256))
+                # gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)
-                X_gray[i] = gray_img.astype('float32') / 255
+                # X_gray[i] = gray_img.astype('float32') / 255
                 X_dog[i] = dog.astype('float32') / 255
                 X_lbp[i] = lbp.astype('float32') / 255
                 # Store class
@@ -99,5 +99,5 @@ class DataGenerator(keras.utils.Sequence):
         # print('X_gray = ' + str(X_gray))
         # print('X_dog = ' + str(X_dog))
         # print('X_lbp = ' + str(X_lbp))
-        return [X_gray, X_dog, X_lbp], y
+        return [X_dog, X_lbp], y
         # return X, y
