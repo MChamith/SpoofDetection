@@ -4,6 +4,7 @@ import keras
 from keras import optimizers
 
 from LBPDataGenerator import LBPDataGenerator
+from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
 import os
 import numpy as np
@@ -62,9 +63,9 @@ val_params = {'dim': (256, 256),
               'n_channels': 2,
               'shuffle': False}
 
-train_gen = LBPDataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
-val_generator = LBPDataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
-test_generator = LBPDataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
+train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
+val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
+test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
 model = cnn_model()
 print('compiling model')
