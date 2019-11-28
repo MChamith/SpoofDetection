@@ -4,7 +4,7 @@ import keras
 from keras import optimizers
 
 from LBPDataGenerator import LBPDataGenerator
-from LBPModel import cnn_model
+from SpoofModel import cnn_model
 import os
 import numpy as np
 from sklearn.utils import shuffle
