@@ -46,14 +46,14 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img_gray = cv2.resize(img_gray, (256, 256))
         hist = desc.describe(img_gray)
-        if count % 60 == 0 and count % 50 != 0:
+        if count % 100 == 0 and count % 110 != 0:
             print('val file ' + str(filename))
             val_data.append(hist)
             if path.split('/')[-3] == 'live':
                 val_label.append(1)
             elif path.split('/')[-3] == 'spoof':
                 val_label.append(0)
-        elif count %50 == 0 and count %60 !=0:
+        elif count %110 == 0 and count %100 !=0:
             print('test file ' + str(filename))
             test_data.append(hist)
             if path.split('/')[-3] == 'live':
