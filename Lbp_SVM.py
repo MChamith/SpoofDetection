@@ -27,7 +27,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
                 label.append(1)
             elif path.split('/')[-3] == 'spoof':
                 label.append(0)
-            count +=1
+        count +=1
 
 print('dumping pickle')
 with open('train_data.pickle', 'wb') as handle:
