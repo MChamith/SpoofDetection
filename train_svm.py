@@ -7,7 +7,7 @@ with open("train_data.pickle", "rb") as myfile:
     X_train = pickle.load(myfile)
     X_label = pickle.load(myfile)
 
-with open('test_data.pickle') as handle:
+with open('test_data.pickle', 'rb') as handle:
     X_test = pickle.load(handle)
     test_label = pickle.load(handle)
     X_val = pickle.load(handle)
