@@ -18,7 +18,6 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         img = cv2.imread(path)
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img_gray = cv2.resize(img_gray, (256, 256))
-        img_gray = np.expand_dims(img_gray, axis=-1)
         hist = desc.describe(img_gray)
         train_data.append(hist)
         if path.split('/')[-3] == 'live':
