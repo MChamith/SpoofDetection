@@ -42,6 +42,7 @@ val_data = []
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
+        print(filename)
         if count % 60 == 0 and count % 50 != 0:
             val_data.append(path)
             if path.split('/')[-3] == 'live':
@@ -57,10 +58,11 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
         count +=1
 
 # Fit on training set only.
-
+print('dumping pickle')
 with open('test_data.pickle', 'rb') as handle:
     pickle.dump(test_data, handle)
     pickle.dump(test_label, handle)
     pickle.dump(val_data, handle)
     pickle.dump(val_label, handle)
 
+print('pickle dumped')
