@@ -11,6 +11,7 @@ TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 # train_data = []
 # label = []
 desc = LocalBinaryPatterns(24, 8)
+print('collecting data')
 # count = 0
 # for root, dirnames, filenames in os.walk(TRAIN_DIR):
 #     for filename in fnmatch.filter(filenames, "*.jpg"):
