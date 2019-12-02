@@ -14,7 +14,7 @@ desc = LocalBinaryPatterns(24, 8)
 count = 0
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        if count % 20 == 0:
+        if count % 40 == 0:
             print(filename)
             path = os.path.join(root, filename)
             # print(path)
