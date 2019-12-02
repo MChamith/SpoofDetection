@@ -10,7 +10,7 @@ TRAIN_DIR = '/home/ubuntu/volume/SiW_release/Train/'
 TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 # train_data = []
 # label = []
-# desc = LocalBinaryPatterns(24, 8)
+desc = LocalBinaryPatterns(24, 8)
 # count = 0
 # for root, dirnames, filenames in os.walk(TRAIN_DIR):
 #     for filename in fnmatch.filter(filenames, "*.jpg"):
@@ -43,14 +43,18 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
         path = os.path.join(root, filename)
         print(filename)
+        img = cv2.imread(path)
+        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img_gray = cv2.resize(img_gray, (256, 256))
+        hist = desc.describe(img_gray)
         if count % 60 == 0 and count % 50 != 0:
-            val_data.append(path)
+            val_data.append(hist)
             if path.split('/')[-3] == 'live':
                 val_label.append(1)
             elif path.split('/')[-3] == 'spoof':
                 val_label.append(0)
         elif count %50 == 0:
-            test_data.append(path)
+            test_data.append(hist)
             if path.split('/')[-3] == 'live':
                 test_label.append(1)
             elif path.split('/')[-3] == 'spoof':
