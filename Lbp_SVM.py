@@ -13,6 +13,7 @@ label = []
 desc = LocalBinaryPatterns(24, 8)
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
+        print(filename)
         path = os.path.join(root, filename)
         # print(path)
         img = cv2.imread(path)
@@ -25,6 +26,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         elif path.split('/')[-3] == 'spoof':
             label.append(0)
 
+print('dumping pickle')
 with open('train_data.pickle', 'wb') as handle:
     pickle.dump(train_data, handle)
     pickle.dump(label, handle)
