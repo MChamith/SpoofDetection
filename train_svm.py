@@ -8,10 +8,10 @@ with open("train_data.pickle", "rb") as myfile:
     X_label = pickle.load(myfile)
 
 with open('test_data.pickle') as handle:
-    X_test = pickle.load(myfile)
-    test_label = pickle.load(myfile)
-    X_val = pickle.load(myfile)
-    val_label = pickle.load(myfile)
+    X_test = pickle.load(handle)
+    test_label = pickle.load(handle)
+    X_val = pickle.load(handle)
+    val_label = pickle.load(handle)
 scaler = StandardScaler()
 # Fit on training set only.
 scaler.fit(X_train)
