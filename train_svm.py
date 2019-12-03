@@ -25,7 +25,7 @@ X_test = scaler.transform(X_test)
 X_val = scaler.transform(X_val)
 print('Scale transformed')
 
-model = LinearSVC(C=20.0, max_iter=50000, verbose=1)
+model = LinearSVC(C=2.0, max_iter=50000, verbose=1)
 print('starting to fit model')
 model.fit(X_train, X_label)
 print('model fitted')
