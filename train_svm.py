@@ -33,3 +33,5 @@ score = model.score(X_val, val_label)
 print('score = ' + str(score))
 with open('model.pickle', 'wb') as handle:
     pickle.dump(model, handle)
+with open('scaler.pickle', 'wb') as handle:
+    pickle.dump(scaler, handle)
