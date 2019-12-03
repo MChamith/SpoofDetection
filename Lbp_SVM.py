@@ -32,7 +32,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         print(label)
 
 print('dumping pickle')
-with open('train_data.pickle', 'wb') as handle:
+with open('train_data.pickle2', 'wb') as handle:
     pickle.dump(train_data, handle)
     pickle.dump(label, handle)
 # count = 0
