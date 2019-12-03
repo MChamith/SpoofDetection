@@ -31,3 +31,5 @@ model.fit(X_train, X_label)
 print('model fitted')
 score = model.score(X_val, val_label)
 print('score = ' + str(score))
+with open('model.pickle', 'wb') as handle:
+    pickle.dump(model, handle)
