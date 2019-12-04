@@ -5,7 +5,7 @@ from sklearn.svm import LinearSVC
 
 print('collecting train data')
 
-with open("train_data.pickle", "rb") as myfile:
+with open("train_data2.pickle", "rb") as myfile:
     X_train = pickle.load(myfile)
     X_label = pickle.load(myfile)
 print('train data collected')
@@ -31,7 +31,7 @@ model.fit(X_train, X_label)
 print('model fitted')
 score = model.score(X_val, val_label)
 print('score = ' + str(score))
-with open('model.pickle', 'wb') as handle:
+with open('model2.pickle', 'wb') as handle:
     pickle.dump(model, handle)
-with open('scaler.pickle', 'wb') as handle:
+with open('scaler2.pickle', 'wb') as handle:
     pickle.dump(scaler, handle)
