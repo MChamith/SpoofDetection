@@ -53,12 +53,12 @@ data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
 test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test_data['test_label'])
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
-params = {'dim': (256, 256),
+params = {'dim': (128, 128),
           'batch_size': 32,
           'n_channels': 2,
           'shuffle': True}
 
-val_params = {'dim': (256, 256),
+val_params = {'dim': (128, 128),
               'batch_size': 16,
               'n_channels': 2,
               'shuffle': False}
@@ -72,7 +72,7 @@ print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/LBPDOG/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/Model_128_input/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
