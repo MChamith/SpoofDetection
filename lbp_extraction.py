@@ -11,15 +11,20 @@ import cv2
 def calc_lbp(img):
     # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     # img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
     lbp = feature.local_binary_pattern(img, 8, 1, method='default')
     lbp = lbp.astype('uint8')
     # lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
     #                                    1, method="default")
-    lbp = cv2.resize(lbp, (256, 256))
+    lbp = cv2.resize(lbp, (128, 128))
     return lbp
 
-# img = cv2.imread('003-1-3-4-131.jpg')
+#
+# img = cv2.imread('passport.jpg')
 # img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# lbp = calc_lbp(img_gray)
+# cv2.imshow('lbp', lbp.astype('uint8'))
+# cv2.waitKey(0)
 # lbp = feature.local_binary_pattern(img_gray, 8,1,method='default')
 # print(lbp)
 # lbp = np.expand_dims(lbp, axis=-1)
