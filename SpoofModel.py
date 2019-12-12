@@ -49,7 +49,7 @@ def cnn_model():
     # X3 = MaxPool2D(pool_size=(2, 2), strides=(2, 2), padding='same')(X3)
     # X3 = Convolution2D(filters=1024, kernel_size=(7, 7), padding='same', activation='relu')(X3)
     # X3 = MaxPool2D(pool_size=(2, 2), strides=(2, 2), padding='same')(X3)
-    concat = Concatenate()([X1, X2])
+    concat = Concatenate()([X1, X2, X3])
     X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(concat)
     X = Convolution2D(filters=128, kernel_size=(7, 7), padding='same', activation='relu')(X)
     X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
