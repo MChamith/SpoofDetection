@@ -55,12 +55,12 @@ test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_da
 print('data shuffled')
 params = {'dim': (128, 128),
           'batch_size': 32,
-          'n_channels': 2,
+          'n_channels': 3,
           'shuffle': True}
 
 val_params = {'dim': (128, 128),
               'batch_size': 16,
-              'n_channels': 2,
+              'n_channels': 3,
               'shuffle': False}
 
 train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
