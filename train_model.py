@@ -22,33 +22,31 @@ TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        if filename.split('-')[-3] == '3':
-            path = os.path.join(root, filename)
-            data['X_train'].append(path)
-            if path.split('/')[-3] == 'live':
-                data['label'].append(1)
-            elif path.split('/')[-3] == 'spoof':
-                data['label'].append(0)
+        path = os.path.join(root, filename)
+        data['X_train'].append(path)
+        if path.split('/')[-3] == 'live':
+            data['label'].append(1)
+        elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+            data['label'].append(0)
 
 count = 0
 print('collecting validation and test data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        if filename.split('-')[-3] == '3':
-            path = os.path.join(root, filename)
-            if count % 10 == 0:
-                test_data['X_val'].append(path)
-                if path.split('/')[-3] == 'live':
-                    test_data['val_label'].append(1)
-                elif path.split('/')[-3] == 'spoof':
-                    test_data['val_label'].append(0)
-            else:
-                test_data['X_test'].append(path)
-                if path.split('/')[-3] == 'live':
-                    test_data['test_label'].append(1)
-                elif path.split('/')[-3] == 'spoof':
-                    test_data['test_label'].append(0)
-            count += 1
+        path = os.path.join(root, filename)
+        if count % 10 == 0:
+            test_data['X_val'].append(path)
+            if path.split('/')[-3] == 'live':
+                test_data['val_label'].append(1)
+            elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+                test_data['val_label'].append(0)
+        else:
+            test_data['X_test'].append(path)
+            if path.split('/')[-3] == 'live':
+                test_data['test_label'].append(1)
+            elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+                test_data['test_label'].append(0)
+        count += 1
 
 print('shuffling data')
 data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
