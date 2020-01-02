@@ -22,7 +22,6 @@ TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        print('type id' + str(filename.split('-')[-3]))
         if filename.split('-')[-3] == '3':
             path = os.path.join(root, filename)
             data['X_train'].append(path)
