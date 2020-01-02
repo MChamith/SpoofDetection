@@ -22,7 +22,8 @@ TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 print('collecting training data')
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        if filename.split('-')[-3] == 3:
+        print('type id' + str(filename.split('-')[-3]))
+        if filename.split('-')[-3] == '3':
             path = os.path.join(root, filename)
             data['X_train'].append(path)
             if path.split('/')[-3] == 'live':
@@ -34,7 +35,7 @@ count = 0
 print('collecting validation and test data')
 for root, dirnames, filenames in os.walk(TEST_DIR):
     for filename in fnmatch.filter(filenames, "*.jpg"):
-        if filename.split('-')[-3] == 3:
+        if filename.split('-')[-3] == '3':
             path = os.path.join(root, filename)
             if count % 10 == 0:
                 test_data['X_val'].append(path)
