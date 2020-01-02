@@ -65,6 +65,7 @@ val_params = {'dim': (128, 128),
               'n_channels': 3,
               'shuffle': False}
 
+print('train data ' + str(data['X_train']))
 train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
 val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
