@@ -6,9 +6,9 @@ import keras.backend as K
 
 
 def cnn_model():
-    input_img1 = Input(shape=(128, 128, 1))  # channel first
-    input_img2 = Input(shape=(128, 128, 1))
-    input_img3 = Input(shape=(128, 128, 1))
+    input_img1 = Input(shape=(256, 256, 1))  # channel first
+    input_img2 = Input(shape=(256, 256, 1))
+    input_img3 = Input(shape=(256, 256, 1))
 
     X1 = Convolution2D(filters=32, kernel_size=(7, 7), padding='same', activation='relu')(input_img1)
     X1 = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X1)
