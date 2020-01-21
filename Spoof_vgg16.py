@@ -7,7 +7,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Convolution2D, MaxPool2D, Input, Concatenate, Flatten, concatenate
 import numpy as np
 import keras.backend as K
-from keras_applications.vgg19 import VGG19
+from keras.applications.vgg19 import VGG19
 
 
 def vgg16_feature_fusion():
