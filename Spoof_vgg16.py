@@ -11,9 +11,9 @@ from keras.applications.vgg19 import VGG19
 
 
 def vgg16_feature_fusion():
-    base_model1 = VGG19(weights='imagenet', include_top=False)
-    base_model2 = VGG19(weights='imagenet', include_top=False)
-    base_model3 = VGG19(weights='imagenet', include_top=False)
+    base_model1 = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+    base_model2 = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+    base_model3 = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
     for i, layer in enumerate(base_model2.layers):
         layer.name = str(layer.name) + '_2'
     for i, layer in enumerate(base_model3.layers):
