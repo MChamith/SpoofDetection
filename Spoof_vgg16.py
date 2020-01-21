@@ -14,11 +14,10 @@ def vgg16_feature_fusion():
     base_model1 = VGG19(weights='imagenet', include_top=False)
     base_model2 = VGG19(weights='imagenet', include_top=False)
     base_model3 = VGG19(weights='imagenet', include_top=False)
-    #
-    # model = Model(inputs=base_model1.input, outputs=base_model1.get_layer('block4_pool').output)
-    # # model2 = Model(inputs=base_model2.input, outputs=base_model2.get_layer('block4_pool').output)
-    # # model3 = Model(inputs=base_model3.input, outputs=base_model3.get_layer('block4_pool').output)
-    #
+    for i, layer in enumerate(base_model2.layers):
+        layer.name = str(layer.name) + '_2'
+    for i, layer in enumerate(base_model3.layers):
+        layer.name = str(layer.name) + '_3'
     concatenated = concatenate(
         [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool').output,
          base_model3.get_layer('block4_pool').output])
