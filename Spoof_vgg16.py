@@ -37,7 +37,7 @@ def vgg16_feature_fusion():
     # print('before ' +str(X.shape))
     X = Dense(1, activation='sigmoid')(X)
     # print('after ' + str(X.shape))
-    model = Model(inputs=[base_model1.input, base_model2.input, base_model3.input], outputs=X, in)
+    model = Model(inputs=[base_model1.input, base_model2.input, base_model3.input], outputs=X)
     return model
 
 
