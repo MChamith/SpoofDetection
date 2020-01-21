@@ -12,32 +12,32 @@ from keras_applications.vgg19 import VGG19
 
 def vgg16_feature_fusion():
     base_model1 = VGG19(weights='imagenet', include_top=False)
-    base_model2 = VGG19(weights='imagenet', include_top=False)
-    base_model3 = VGG19(weights='imagenet', include_top=False)
-
-    # model1 = Model(inputs=base_model1.input, outputs=base_model1.get_layer('block4_pool').output)
-    # model2 = Model(inputs=base_model2.input, outputs=base_model2.get_layer('block4_pool').output)
-    # model3 = Model(inputs=base_model3.input, outputs=base_model3.get_layer('block4_pool').output)
-
-    concatenated = concatenate(
-        [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool').output,
-         base_model3.get_layer('block4_pool').output])
-
-    X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(concatenated)
-    X = Convolution2D(filters=128, kernel_size=(7, 7), padding='same', activation='relu')(X)
-    X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
-    X = Convolution2D(filters=64, kernel_size=(7, 7), padding='same', activation='relu')(X)
+    # base_model2 = VGG19(weights='imagenet', include_top=False)
+    # base_model3 = VGG19(weights='imagenet', include_top=False)
+    #
+    model = Model(inputs=base_model1.input, outputs=base_model1.get_layer('block4_pool').output)
+    # # model2 = Model(inputs=base_model2.input, outputs=base_model2.get_layer('block4_pool').output)
+    # # model3 = Model(inputs=base_model3.input, outputs=base_model3.get_layer('block4_pool').output)
+    #
+    # concatenated = concatenate(
+    #     [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool').output,
+    #      base_model3.get_layer('block4_pool').output])
+    #
+    # X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(concatenated)
+    # X = Convolution2D(filters=128, kernel_size=(7, 7), padding='same', activation='relu')(X)
     # X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
-    # X = Convolution2D(filters=256, kernel_size=(7, 7), padding='same', activation='relu')(X)
-    X = Flatten()(X)
-    X = Dense(128, activation='relu')(X)
-    X = Dense(64, activation='relu')(X)
+    # X = Convolution2D(filters=64, kernel_size=(7, 7), padding='same', activation='relu')(X)
+    # # X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
+    # # X = Convolution2D(filters=256, kernel_size=(7, 7), padding='same', activation='relu')(X)
+    # X = Flatten()(X)
     # X = Dense(128, activation='relu')(X)
     # X = Dense(64, activation='relu')(X)
-    # print('before ' +str(X.shape))
-    X = Dense(1, activation='sigmoid')(X)
-    # print('after ' + str(X.shape))
-    model = Model(inputs=[base_model1.input, base_model2.input, base_model3.input], outputs=X)
+    # # X = Dense(128, activation='relu')(X)
+    # # X = Dense(64, activation='relu')(X)
+    # # print('before ' +str(X.shape))
+    # X = Dense(1, activation='sigmoid')(X)
+    # # print('after ' + str(X.shape))
+    # model = Model(inputs=[base_model1.input, base_model2.input, base_model3.input], outputs=X)
     return model
 
 
