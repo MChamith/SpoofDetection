@@ -47,5 +47,4 @@ def vgg16_feature_fusion():
     return model
 
 
-finalModel = vgg16_feature_fusion()
-print(finalModel.summary())
+# finalModel = vgg16_feature_fusion()

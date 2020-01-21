@@ -6,6 +6,7 @@ from keras import optimizers
 from LBPDataGenerator import LBPDataGenerator
 from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
+from Spoof_vgg16 import vgg16_feature_fusion
 import os
 import numpy as np
 from sklearn.utils import shuffle
@@ -26,7 +27,7 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         if path.split('/')[-3] == 'live':
             data['X_train'].append(path)
             data['label'].append(1)
-        elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+        elif path.split('/')[-3] == 'spoof':
             data['X_train'].append(path)
             data['label'].append(0)
 
@@ -39,14 +40,14 @@ for root, dirnames, filenames in os.walk(TEST_DIR):
             if path.split('/')[-3] == 'live':
                 test_data['X_val'].append(path)
                 test_data['val_label'].append(1)
-            elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+            elif path.split('/')[-3] == 'spoof':
                 test_data['X_val'].append(path)
                 test_data['val_label'].append(0)
         else:
             if path.split('/')[-3] == 'live':
                 test_data['X_test'].append(path)
                 test_data['test_label'].append(1)
-            elif path.split('/')[-3] == 'spoof' and filename.split('-')[-3] == '3':
+            elif path.split('/')[-3] == 'spoof':
                 test_data['X_test'].append(path)
                 test_data['test_label'].append(0)
         count += 1
@@ -71,12 +72,12 @@ train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label
 val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
-model = cnn_model()
+model = vgg16_feature_fusion()
 print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
+model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/Model_256_input_replay/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/VGG_fusion/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
