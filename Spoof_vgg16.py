@@ -19,11 +19,11 @@ def vgg16_feature_fusion():
     for i, layer in enumerate(base_model3.layers):
         layer.name = str(layer.name) + '_3'
 
-    for layer in base_model1.layers[-4]:
+    for layer in base_model1.layers[:-4]:
         layer.trainable = False
-    for layer in base_model2.layers[-4]:
+    for layer in base_model2.layers[:-4]:
         layer.trainable = False
-    for layer in base_model3.layers[-4]:
+    for layer in base_model3.layers[:-4]:
         layer.trainable = False
     concatenated = concatenate(
         [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool_2').output,
