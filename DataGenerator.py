@@ -9,7 +9,7 @@ from sklearn.utils import shuffle
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
 
-    def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=3,
+    def __init__(self, list_IDs, labels, batch_size=32, dim=(224, 224), n_channels=3,
                  n_classes=2, shuffle=True):
         'Initialization'
         self.dim = dim
@@ -51,9 +51,9 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X_gray = np.empty((self.batch_size, 256, 256, 3))
-        X_dog = np.empty((self.batch_size, 256, 256, 3))
-        X_lbp = np.empty((self.batch_size, 256, 256, 3))
+        X_gray = np.empty((self.batch_size, 224, 224, 3))
+        X_dog = np.empty((self.batch_size, 224, 224, 3))
+        X_lbp = np.empty((self.batch_size, 224, 224, 3))
 
         # for resnet
         # X = np.empty((self.batch_size, 224, 224, 3))
@@ -76,7 +76,7 @@ class DataGenerator(keras.utils.Sequence):
                 # print('dog')
                 lbp = calc_lbp(gray)
                 # print('lbped')
-                gray_img = cv2.resize(gray, (256, 256))
+                gray_img = cv2.resize(gray, (224, 224))
                 gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)

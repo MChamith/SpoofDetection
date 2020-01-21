@@ -57,12 +57,12 @@ data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
 test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test_data['test_label'])
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
-params = {'dim': (256, 256),
+params = {'dim': (224, 224),
           'batch_size': 32,
           'n_channels': 3,
           'shuffle': True}
 
-val_params = {'dim': (256, 256),
+val_params = {'dim': (224, 224),
               'batch_size': 16,
               'n_channels': 3,
               'shuffle': False}
