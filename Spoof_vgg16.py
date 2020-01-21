@@ -33,7 +33,7 @@ def vgg16_feature_fusion():
     X = Convolution2D(filters=512, kernel_size=(7, 7), padding='same', activation='relu')(X)
     X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
     X = Convolution2D(filters=256, kernel_size=(7, 7), padding='same', activation='relu')(X)
-    # X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
+    X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(X)
     # X = Convolution2D(filters=256, kernel_size=(7, 7), padding='same', activation='relu')(X)
     X = Flatten()(X)
     X = Dense(64, activation='relu')(X)
