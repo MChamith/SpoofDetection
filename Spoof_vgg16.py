@@ -19,8 +19,8 @@ def vgg16_feature_fusion():
     for i, layer in enumerate(base_model3.layers):
         layer.name = str(layer.name) + '_3'
     concatenated = concatenate(
-        [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool').output,
-         base_model3.get_layer('block4_pool').output])
+        [base_model1.get_layer('block4_pool').output, base_model2.get_layer('block4_pool_2').output,
+         base_model3.get_layer('block4_pool_3').output])
 
     X = MaxPool2D(pool_size=(2, 2), strides=(2, 2))(concatenated)
     X = Convolution2D(filters=128, kernel_size=(7, 7), padding='same', activation='relu')(X)
