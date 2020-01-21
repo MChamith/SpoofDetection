@@ -51,9 +51,9 @@ class DataGenerator(keras.utils.Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples'  # X : (n_samples, *dim, n_channels)
         # Initialization
-        X_gray = np.empty((self.batch_size, 256, 256, 1))
-        X_dog = np.empty((self.batch_size, 256, 256, 1))
-        X_lbp = np.empty((self.batch_size, 256, 256, 1))
+        X_gray = np.empty((self.batch_size, 256, 256, 3))
+        X_dog = np.empty((self.batch_size, 256, 256, 3))
+        X_lbp = np.empty((self.batch_size, 256, 256, 3))
 
         # for resnet
         # X = np.empty((self.batch_size, 224, 224, 3))
@@ -80,6 +80,9 @@ class DataGenerator(keras.utils.Sequence):
                 gray_img = np.expand_dims(gray_img, axis=-1)
                 dog = np.expand_dims(dog, axis=-1)
                 lbp = np.expand_dims(lbp, axis=-1)
+                gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
+                dog = np.concatenate((dog, dog, dog), axis=-1)
+                lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
                 X_gray[i] = gray_img.astype('float32') / 255
                 X_dog[i] = dog.astype('float32') / 255
                 X_lbp[i] = lbp.astype('float32') / 255
