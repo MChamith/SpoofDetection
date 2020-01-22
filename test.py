@@ -8,7 +8,7 @@ from keras import models
 from difference_of_gaussian import calc_dog
 from lbp_extraction import calc_lbp
 import numpy as np
-import face_recognition
+# import face_recognition
 import matplotlib.pyplot as plt
 
 filename = 'data/IMG_0109.MOV'
