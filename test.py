@@ -11,7 +11,7 @@ import numpy as np
 # import face_recognition
 import matplotlib.pyplot as plt
 
-filename = 'data/IMG_0109.MOV'
+filename = '/home/ubuntu/volume/data/IMG_0109.MOV'
 cap = cv2.VideoCapture(filename)
 face_cascade = cv2.CascadeClassifier('/home/ubuntu/volume/AntiSpoofing/haarcascade_frontalface_default.xml')
 X_gray = np.empty((1, 224, 224, 3))
