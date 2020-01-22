@@ -11,29 +11,28 @@ import numpy as np
 import face_recognition
 import matplotlib.pyplot as plt
 
-filename = 'data/IMG_1884.MOV'
+filename = 'data/IMG_0109.MOV'
 cap = cv2.VideoCapture(filename)
-face_cascade = cv2.CascadeClassifier(
-    '/home/chamith/Documents/Project/msid_server/venv/lib/python3.6/site-packages/cv2/data'
-    '/haarcascade_frontalface_default.xml')
-X_gray = np.empty((1, 128, 128, 1))
-X_dog = np.empty((1, 128, 128, 1))
-X_lbp = np.empty((1, 128, 128, 1))
+face_cascade = cv2.CascadeClassifier('/home/ubuntu/volume/AntiSpoofing/haarcascade_frontalface_default.xml')
+X_gray = np.empty((1, 224, 224, 3))
+X_dog = np.empty((1, 224, 224, 3))
+X_lbp = np.empty((1, 224, 224, 3))
 # X = np.empty((1, 224, 224, 3))
 result = np.zeros(2)
-model = keras.models.load_model('Model_128_input/Model-03.h5')
-print(model.summary())
+model = keras.models.load_model('/home/ubuntu/volume/SpoofDetection/Checkpoint/VGG_fusion/Model-03.h5')
+# print(model.summary())
 # while True:
 # for file in os.listdir('036_spoof'):
 live_count = 0
 spoof_count = 0
 count = 0
-if True:
-    file = 'data/Skype_Picture_2019_11_21T09_58_26_954Z.jpeg'
+while True:
+    # file = 'data/Skype_Picture_2019_11_21T09_58_26_954Z.jpeg'
     ret, frame = cap.read()
+    # cv2.imshow('frame' , frame)
     # print(ret)
     # print(frame)
-    print(file)
+    # print(file)
     # frame = cv2.imread(file)
     # print(frame)
     # print('height ' + str(frame.shape[0]) + 'width ' + str(frame.shape[1]))
@@ -61,31 +60,37 @@ if True:
             # roi = cv2.resize(roi, (224, 224))
             # roi = roi.astype('float32')/255
             # X[0] = roi.astype('float32')/255
-            # roi = cv2.resize(roi, (256, 256))
+            # roi = cv2.resize(roi, (224, 224))
             # cv2.imshow('frame', roi)
 
             # cv2.imshow('roi', roi)
             # cv2.imwrite('roi3.jpg', roi)
             roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
             dog = calc_dog(roi_gray)
-            cv2.imshow('dog', dog)
+
             lbp = calc_lbp(roi_gray)
             # print(dog)
-            cv2.imshow('lbp', lbp.astype('uint8'))
-            cv2.imwrite('lbp.jpg', lbp)
-            cv2.imwrite('dog.jpg', dog)
-            cv2.imwrite('gray.jpg', roi_gray)
-            gray_img = cv2.resize(roi_gray, (128, 128))
-            cv2.imshow('roi', gray_img)
+
+            gray_img = cv2.resize(roi_gray, (224, 224))
+
             gray_img = np.expand_dims(gray_img, axis=-1)
             dog = np.expand_dims(dog, axis=-1)
             lbp = np.expand_dims(lbp, axis=-1)
+            gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
+            dog = np.concatenate((dog, dog, dog), axis=-1)
+            lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
+            cv2.imwrite('gray.jpg', gray_img)
+            cv2.imwrite('lbp.jpg', lbp)
+            cv2.imwrite('dog.jpg', dog)
+            # cv2.imshow('lbp', lbp)
+            # cv2.imshow('roi', gray_img)
+            # cv2.imshow('dog', dog)
             X_gray[0] = gray_img.astype('float32') / 255
             X_dog[0] = dog.astype('float32') / 255
             X_lbp[0] = lbp.astype('float32') / 255
             prediction = model.predict([X_gray, X_dog, X_lbp])
             # prediction = model.predict(X_lbp)
-
+            #
             # if np.argmax(prediction) == 1:
             #     print('live ' + str(prediction))
             #     live_count += 1
@@ -130,7 +135,7 @@ if True:
             #             channel_image -= channel_image.mean()  # Post-processes the feature to make it visually palatable
             #             channel_image /= channel_image.std()
             #             channel_image *= 64
-            #             channel_image += 128
+            #             channel_image += 224
             #             channel_image = np.clip(channel_image, 0, 255).astype('uint8')
             #             display_grid[col * size: (col + 1) * size,  # Displays the grid
             #             row * size: (row + 1) * size] = channel_image
@@ -141,6 +146,8 @@ if True:
             #     plt.grid(False)
             #     plt.imshow(display_grid, aspect='auto', cmap='viridis')
             #     plt.savefig('intermediate_features/live' +str(layer_name)+'.jpg')
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
         # cv2.waitKey(0)
     else:
         print('no face found ')
