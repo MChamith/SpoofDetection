@@ -146,8 +146,8 @@ while True:
             #     plt.grid(False)
             #     plt.imshow(display_grid, aspect='auto', cmap='viridis')
             #     plt.savefig('intermediate_features/live' +str(layer_name)+'.jpg')
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+            #     break
         # cv2.waitKey(0)
     else:
         print('no face found ')
