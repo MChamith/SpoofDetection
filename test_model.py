@@ -11,7 +11,7 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 test_data = {'X_test': [], 'label': []}
 
 TEST_DIR = '/home/ubuntu/volume/home/ubuntu/SpoofDetection/Data'
-MODEL_DIR = '/home/ubuntu/volume/home/ubuntu/SpoofDetection/Models'
+MODEL_DIR = '/home/ubuntu/volume/home/ubuntu/SpoofDetection/Checkpoint/'
 
 print('collecting test data')
 count = 0

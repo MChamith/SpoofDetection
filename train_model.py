@@ -6,7 +6,7 @@ from keras import optimizers
 from LBPDataGenerator import LBPDataGenerator
 from DataGenerator import DataGenerator
 from SpoofModel import cnn_model
-from Spoof_vgg16 import vgg16_feature_fusion
+# from Spoof_vgg16 import vgg16_feature_fusion
 import os
 import numpy as np
 from sklearn.utils import shuffle
@@ -57,12 +57,12 @@ data['X_train'], data['label'] = shuffle(data['X_train'], data['label'])
 test_data['X_test'], test_data['test_label'] = shuffle(test_data['X_test'], test_data['test_label'])
 test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_data['val_label'])
 print('data shuffled')
-params = {'dim': (224, 224),
+params = {'dim': (256, 256),
           'batch_size': 32,
           'n_channels': 3,
           'shuffle': True}
 
-val_params = {'dim': (224, 224),
+val_params = {'dim': (256, 256),
               'batch_size': 16,
               'n_channels': 3,
               'shuffle': False}
@@ -72,12 +72,12 @@ train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label
 val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
 test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
-model = vgg16_feature_fusion()
+model = cnn_model()
 print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['binary_accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/VGG_fusion/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/YCRfusion/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
