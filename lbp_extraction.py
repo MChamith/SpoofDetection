@@ -16,7 +16,7 @@ def calc_lbp(img):
     lbp = lbp.astype('uint8')
     # lbp = feature.local_binary_pattern(hsv[:, :, 1], 8,
     #                                    1, method="default")
-    lbp = cv2.resize(lbp, (224, 224))
+    lbp = cv2.resize(lbp, (256, 256))
     return lbp
 
 #

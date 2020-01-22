@@ -10,7 +10,7 @@ def calc_dog(img):
     blur5 = cv2.GaussianBlur(img, (5, 5), 0)
     blur3 = cv2.GaussianBlur(img, (3, 3), 0)
     DoG = blur5 - blur3
-    result = cv2.resize(DoG, (224, 224))
+    result = cv2.resize(DoG, (256, 256))
     # print('result size ' + str(result.shape) + 'result type ' + str(type(result)))
     return result
 
