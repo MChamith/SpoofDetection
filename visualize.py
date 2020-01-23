@@ -1,6 +1,6 @@
 import fnmatch
 import os
-from random import shuffle
+from sklearn.utils import shuffle
 import random
 import cv2
 import numpy as np
