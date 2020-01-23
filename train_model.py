@@ -75,7 +75,7 @@ test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=te
 model = cnn_model()
 print('compiling model')
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 print('model compiled')
 file_path = 'Checkpoint/YCRfusion/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
