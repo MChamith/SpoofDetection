@@ -72,7 +72,7 @@ class DataGenerator(keras.utils.Sequence):
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
-                cb = ycrcb[-1]
+                cb = ycrcb[0]
                 # print('converted to gray')
                 dog = calc_dog(gray)
                 # print('dog')
