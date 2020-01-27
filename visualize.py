@@ -13,6 +13,7 @@ import seaborn as sns
 from difference_of_gaussian import calc_dog
 from lbp_extraction import calc_lbp
 import matplotlib.patheffects as PathEffects
+
 TEST_DIR = '/home/ubuntu/volume/SiW_release/Test/'
 model = keras.models.load_model('Models/Model-03.h5')
 
@@ -129,22 +130,23 @@ def nua_data_create():
                     else:
                         print('spoof image')
                         y_nua.append(0)
-                count +=1
+                count += 1
     print('saving numpy arrays')
     np.save('X_nua.npy', np.array(X_nua))
     np.save('y_nua.npy', np.array(y_nua))
 
-def scatter(x, colors):
+
+def scatter(x, colors, dataset):
     # We choose a color palette with seaborn.
     palette = np.array(sns.color_palette("hls", 2))
 
     # We create a scatter plot.
     f = plt.figure(figsize=(48, 48))
     ax = plt.subplot(aspect='equal')
-    sc = ax.scatter(x[:,0], x[:,1], lw=0, s=100,
+    sc = ax.scatter(x[:, 0], x[:, 1], lw=0, s=100,
                     c=palette[colors.astype(np.int)])
-    #plt.xlim(-25, 25)
-    #plt.ylim(-25, 25)
+    # plt.xlim(-25, 25)
+    # plt.ylim(-25, 25)
     ax.axis('on')
     ax.axis('tight')
 
@@ -153,7 +155,7 @@ def scatter(x, colors):
     for i in range(2):
         # Position of each label.
         xtext, ytext = np.median(x[colors == i, :], axis=0)
-        txt = ax.text(xtext, ytext, str(i), fontsize=64)
+        txt = ax.text(xtext, ytext, str(dataset) + '_' + str(i), fontsize=64)
         txt.set_path_effects([
             PathEffects.Stroke(linewidth=5, foreground="w"),
             PathEffects.Normal()])
@@ -161,15 +163,14 @@ def scatter(x, colors):
 
     return f, ax, sc, txts
 
-
-siw_data_create()
-nua_data_create()
+#
+# siw_data_create()
+# nua_data_create()
 
 X_siw = np.load('X_siw.npy')
 y_siw = np.load('y_siw.npy')
 X_nua = np.load('X_nua.npy')
 y_nua = np.load('y_nua.npy')
-
 
 # X_siw = StandardScaler().fit_transform(X_siw)
 
@@ -178,7 +179,7 @@ X_nua = X_nua.reshape(X_nua.shape[0], -1)
 
 X_siw_embedded = TSNE(n_components=2).fit_transform(X_siw)
 X_nua_embedded = TSNE(n_components=2).fit_transform(X_nua)
-scatter(X_siw_embedded, y_siw)
-scatter(X_nua_embedded, y_nua)
-plt.savefig('tsne-plot.png', dpi=120)
 
+scatter(X_siw_embedded, y_siw, 'Siw')
+scatter(X_nua_embedded, y_nua , 'Nua')
+plt.savefig('tsne-plot.png', dpi=120)
