@@ -167,7 +167,7 @@ y_nua = np.load('y_nua.npy')
 # X_siw = StandardScaler().fit_transform(X_siw)
 
 X_siw = X_siw.reshape(X_siw.shape[0], -1)
-X_nua = X_siw.reshape(X_nua.shape[0], -1)
+X_nua = X_nua.reshape(X_nua.shape[0], -1)
 
 X_siw_embedded = TSNE(n_components=2).fit_transform(X_siw)
 X_nua_embedded = TSNE(n_components=2).fit_transform(X_nua)
