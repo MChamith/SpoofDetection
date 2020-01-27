@@ -84,6 +84,7 @@ def siw_data_create():
 
 
 def nua_data_create():
+    count = 0
     X_nua = []
     y_nua = []
     X_gray = np.empty((1, 256, 256, 1))
@@ -92,42 +93,43 @@ def nua_data_create():
     for root, dirs, filenames in os.walk('NUA'):
         for file in filenames:
             if file.endswith('.jpg'):
-                print('file ' + str(file))
-                path = os.path.join(root, file)
-                img = cv2.imread(path)
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                # ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
-                # cb = ycrcb[0]
-                # print('converted to gray')
-                dog = calc_dog(gray)
-                # print('dog')
-                lbp = calc_lbp(gray)
-                # print('lbped')
-                # gray_img = cv2.resize(gray, (256, 256))
-                gray_img = cv2.resize(gray, (256, 256))
-                gray_img = np.expand_dims(gray_img, axis=-1)
-                dog = np.expand_dims(dog, axis=-1)
-                lbp = np.expand_dims(lbp, axis=-1)
-                # gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
-                # dog = np.concatenate((dog, dog, dog), axis=-1)
-                # lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
-                X_gray[0] = gray_img.astype('float32') / 255
-                X_dog[0] = dog.astype('float32') / 255
-                X_lbp[0] = lbp.astype('float32') / 255
+                if count % 10 == 0:
+                    print('file ' + str(file))
+                    path = os.path.join(root, file)
+                    img = cv2.imread(path)
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    # ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
+                    # cb = ycrcb[0]
+                    # print('converted to gray')
+                    dog = calc_dog(gray)
+                    # print('dog')
+                    lbp = calc_lbp(gray)
+                    # print('lbped')
+                    # gray_img = cv2.resize(gray, (256, 256))
+                    gray_img = cv2.resize(gray, (256, 256))
+                    gray_img = np.expand_dims(gray_img, axis=-1)
+                    dog = np.expand_dims(dog, axis=-1)
+                    lbp = np.expand_dims(lbp, axis=-1)
+                    # gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
+                    # dog = np.concatenate((dog, dog, dog), axis=-1)
+                    # lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
+                    X_gray[0] = gray_img.astype('float32') / 255
+                    X_dog[0] = dog.astype('float32') / 255
+                    X_lbp[0] = lbp.astype('float32') / 255
 
-                intermediate_layer_model = Model(inputs=model.input,
-                                                 outputs=model.get_layer('concatenate_1').output)
-                intermediate_output = intermediate_layer_model.predict([X_gray, X_dog, X_lbp])
-                print('appending output')
-                X_nua.append(intermediate_output)
+                    intermediate_layer_model = Model(inputs=model.input,
+                                                     outputs=model.get_layer('concatenate_1').output)
+                    intermediate_output = intermediate_layer_model.predict([X_gray, X_dog, X_lbp])
+                    print('appending output')
+                    X_nua.append(intermediate_output)
 
-                if path.strip('.jpg').split('_')[-1] == 'live':
-                    print('live image')
-                    y_nua.append(1)
-                else:
-                    print('spoof image')
-                    y_nua.append(0)
-
+                    if path.strip('.jpg').split('_')[-1] == 'live':
+                        print('live image')
+                        y_nua.append(1)
+                    else:
+                        print('spoof image')
+                        y_nua.append(0)
+                count +=1
     print('saving numpy arrays')
     np.save('X_nua.npy', np.array(X_nua))
     np.save('y_nua.npy', np.array(y_nua))
@@ -158,6 +160,11 @@ def scatter(x, colors):
         txts.append(txt)
 
     return f, ax, sc, txts
+
+
+siw_data_create()
+nua_data_create()
+
 X_siw = np.load('X_siw.npy')
 y_siw = np.load('y_siw.npy')
 X_nua = np.load('X_nua.npy')
