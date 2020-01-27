@@ -40,7 +40,7 @@ def siw_data_create():
     X_siw_paths, y_siw = shuffle(X_siw_paths, y_siw)
 
     pairs = list(zip(X_siw_paths, y_siw))  # make pairs out of the two lists
-    pairs = random.sample(pairs, 15000)  # pick 3 random pairs
+    pairs = random.sample(pairs, 1500)  # pick 3 random pairs
     filepaths, labels = zip(*pairs)
 
     for image_path in filepaths:
@@ -163,7 +163,9 @@ y_siw = np.load('y_siw.npy')
 X_nua = np.load('X_nua.npy')
 y_nua = np.load('y_nua.npy')
 
-tsne = TSNE()
+tsne = TSNE(n_components=2, init='pca')
+X_siw = StandardScaler().fit_transform(X_siw)
+
 X_siw_embedded = tsne.fit_transform(X_siw)
 X_nua_embedded = tsne.fit_transform(X_nua)
 scatter(X_siw_embedded, y_siw)
