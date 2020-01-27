@@ -164,12 +164,12 @@ X_nua = np.load('X_nua.npy')
 y_nua = np.load('y_nua.npy')
 
 tsne = TSNE(n_components=2, init='pca')
-X_siw = StandardScaler().fit_transform(X_siw)
+# X_siw = StandardScaler().fit_transform(X_siw)
 
 X_siw_embedded = tsne.fit_transform(X_siw)
 X_nua_embedded = tsne.fit_transform(X_nua)
 scatter(X_siw_embedded, y_siw)
-scatter(X_nua, y_nua)
+scatter(X_nua_embedded, y_nua)
 plt.savefig('tsne-plot.png', dpi=120)
 
 
