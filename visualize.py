@@ -165,12 +165,12 @@ y_nua = np.load('y_nua.npy')
 
 
 # X_siw = StandardScaler().fit_transform(X_siw)
-print('X_iw shape ' + str(X_siw.shape))
-print('y_iw shape ' + str(y_siw.shape))
+
 X_siw = X_siw.reshape(X_siw.shape[0], -1)
-print('xiw after reshape ' + str(X_siw.shape))
-X_siw_embedded = TSNE(n_components=2, init='pca').fit_transform(X_siw)
-X_nua_embedded = TSNE(n_components=2, init='pca').fit_transform(X_nua)
+X_nua = X_siw.reshape(X_nua.shape[0], -1)
+
+X_siw_embedded = TSNE(n_components=2).fit_transform(X_siw)
+X_nua_embedded = TSNE(n_components=2).fit_transform(X_nua)
 scatter(X_siw_embedded, y_siw)
 scatter(X_nua_embedded, y_nua)
 plt.savefig('tsne-plot.png', dpi=120)
