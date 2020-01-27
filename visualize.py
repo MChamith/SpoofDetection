@@ -134,7 +134,7 @@ def nua_data_create():
 
 def scatter(x, colors):
     # We choose a color palette with seaborn.
-    palette = np.array(sns.color_palette("hls", 18))
+    palette = np.array(sns.color_palette("hls", 2))
 
     # We create a scatter plot.
     f = plt.figure(figsize=(48, 48))
