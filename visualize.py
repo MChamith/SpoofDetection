@@ -138,13 +138,16 @@ def nua_data_create():
 
 def scatter(x, colors, dataset):
     # We choose a color palette with seaborn.
-    palette = np.array(sns.color_palette("hls", 2))
-
+    palette = np.array(sns.color_palette("hls", 4))
+    if str(dataset) == 'Siw':
+        pallet_color = palette[colors.astype(np.int)]
+    if str(dataset) == 'Nua':
+        pallet_color = palette[colors.astype(np.int)+2]
     # We create a scatter plot.
     f = plt.figure(figsize=(48, 48))
     ax = plt.subplot(aspect='equal')
     sc = ax.scatter(x[:, 0], x[:, 1], lw=0, s=100,
-                    c=palette[colors.astype(np.int)])
+                    c=pallet_color)
     # plt.xlim(-25, 25)
     # plt.ylim(-25, 25)
     ax.axis('on')
