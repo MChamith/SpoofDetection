@@ -67,7 +67,7 @@ def siw_data_create():
         X_lbp[0] = lbp.astype('float32') / 255
 
         intermediate_layer_model = Model(inputs=model.input,
-                                         outputs=model.get_layer('concatenate_1').output)
+                                         outputs=model.get_layer('conv2d_7').output)
         intermediate_output = intermediate_layer_model.predict([X_gray, X_dog, X_lbp])
         print('appending output')
         X_siw.append(intermediate_output)
@@ -80,7 +80,7 @@ def siw_data_create():
         #     y_nua.append(0)
 
     print('saving numpy arrays')
-    np.save('X_siw.npy', np.array(X_siw))
+    np.save('X_siw_2.npy', np.array(X_siw))
     np.save('y_siw.npy', np.array(labels))
 
 
@@ -119,7 +119,7 @@ def nua_data_create():
                     X_lbp[0] = lbp.astype('float32') / 255
 
                     intermediate_layer_model = Model(inputs=model.input,
-                                                     outputs=model.get_layer('concatenate_1').output)
+                                                     outputs=model.get_layer('conv2d_7').output)
                     intermediate_output = intermediate_layer_model.predict([X_gray, X_dog, X_lbp])
                     print('appending output')
                     X_nua.append(intermediate_output)
@@ -132,7 +132,7 @@ def nua_data_create():
                         y_nua.append(0)
                 count += 1
     print('saving numpy arrays')
-    np.save('X_nua.npy', np.array(X_nua))
+    np.save('X_nua_2.npy', np.array(X_nua))
     np.save('y_nua.npy', np.array(y_nua))
 
 
@@ -170,9 +170,9 @@ def scatter(x, colors, dataset):
 # siw_data_create()
 # nua_data_create()
 
-X_siw = np.load('X_siw.npy')
+X_siw = np.load('X_siw_2.npy')
 y_siw = np.load('y_siw.npy')
-X_nua = np.load('X_nua.npy')
+X_nua = np.load('X_nua_2.npy')
 y_nua = np.load('y_nua.npy')
 
 # X_siw = StandardScaler().fit_transform(X_siw)
@@ -193,4 +193,4 @@ for i in range(2):
     plt.scatter(X_siw_label[:, 0], X_siw_label[:, 1], label=names[i])
     plt.scatter(X_nua_label[:, 0], X_nua_label[:, 1], label=names[i+2])
 plt.legend()
-plt.savefig('tsne-plot.png', dpi=120)
+plt.savefig('tsne-plot2.png', dpi=120)
