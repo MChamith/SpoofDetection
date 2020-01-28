@@ -183,6 +183,14 @@ X_nua = X_nua.reshape(X_nua.shape[0], -1)
 X_siw_embedded = TSNE(n_components=2).fit_transform(X_siw)
 X_nua_embedded = TSNE(n_components=2).fit_transform(X_nua)
 
-scatter(X_siw_embedded, y_siw, 'Siw')
-scatter(X_nua_embedded, y_nua , 'Nua')
+# scatter(X_siw_embedded, y_siw, 'Siw')
+# scatter(X_nua_embedded, y_nua , 'Nua')
+# plt.savefig('tsne-plot.png', dpi=120)
+names = ['Siw_live', 'Siw_spoof', 'nua_live', 'nua_spoof']
+for i in range(2):
+    X_siw_label = X_siw_embedded[np.where(y_siw == i)]
+    X_nua_label = X_nua_embedded[np.where(y_nua == i)]
+    plt.scatter(X_siw_label[:, 0], X_siw_label[:, 1], label=names[i])
+    plt.scatter(X_nua_label[:, 0], X_nua_label[:, 1], label=names[i+2])
+plt.legend()
 plt.savefig('tsne-plot.png', dpi=120)
