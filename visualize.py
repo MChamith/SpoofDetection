@@ -167,8 +167,8 @@ def scatter(x, colors, dataset):
     return f, ax, sc, txts
 
 #
-# siw_data_create()
-# nua_data_create()
+siw_data_create()
+nua_data_create()
 
 X_siw = np.load('X_siw_2.npy')
 y_siw = np.load('y_siw.npy')
