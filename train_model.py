@@ -5,7 +5,8 @@ from keras import optimizers
 
 from LBPDataGenerator import LBPDataGenerator
 from DataGenerator import DataGenerator
-from SpoofModel import cnn_model
+from PatchDataGenerator import PatchDataGenerator
+from PatchModel import cnn_model
 # from Spoof_vgg16 import vgg16_feature_fusion
 import os
 import numpy as np
@@ -68,16 +69,16 @@ val_params = {'dim': (256, 256),
               'shuffle': False}
 
 # print('train data ' + str(data['X_train']))
-train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
-val_generator = DataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
-test_generator = DataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
+train_gen = PatchDataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
+val_generator = PatchDataGenerator(**params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
+test_generator = PatchDataGenerator(**params, list_IDs=test_data['X_test'], labels=test_data['test_label'])
 
 model = cnn_model()
 print('compiling model')
-sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+# sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
 print('model compiled')
-file_path = 'Checkpoint/YCRfusion/Model-{epoch:02d}.h5'
+file_path = 'Checkpoint/PatchModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
