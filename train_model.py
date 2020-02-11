@@ -8,7 +8,7 @@ from PatchModel import cnn_model
 import os
 import numpy as np
 from sklearn.utils import shuffle
-from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping, CSVLogger
 
 data = {'X_train': [], 'label': []}
 test_data = {'X_val': [], 'val_label': [], 'X_test': [], 'test_label': []}
@@ -79,15 +79,16 @@ file_path = 'Checkpoint/PatchModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
                               patience=1, min_lr=0.00001)
-early_stop = EarlyStopping(patience=4)
+early_stop = EarlyStopping(patience=8)
 tensorboard_keras = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0,
                                                 write_graph=True, write_images=True)
+csv_logger = CSVLogger('traininglog.csv')
 
 model_history = model.fit_generator(generator=train_gen,
                                     epochs=100,
                                     validation_data=val_generator,
                                     callbacks=[check_pointer,
-                                               reduce_lr, tensorboard_keras, early_stop],
+                                               reduce_lr, tensorboard_keras, early_stop, csv_logger],
                                     shuffle=True,
                                     steps_per_epoch=1000, validation_steps=50
                                     )
