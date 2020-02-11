@@ -77,8 +77,8 @@ class PatchDataGenerator(keras.utils.Sequence):
             # print('id' + str(ID) +'label ' + str(self.labels[idx]))
             try:
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
-                cb = ycrcb[0]
+                # ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
+                # cb = ycrcb[0]
                 # print('converted to gray')
                 dog = calc_dog(gray)
                 # print('dog')
@@ -89,8 +89,8 @@ class PatchDataGenerator(keras.utils.Sequence):
                 print('height ' + str(height))
                 print('width' + str(width))
 
-                i = 0
-                while i < 16:
+                j = 0
+                while j < 16:
                     rH = random.uniform(0, height - 96)
                     rW = random.uniform(0, width - 96)
                     x, y = int(rH), int(rW)
@@ -100,19 +100,12 @@ class PatchDataGenerator(keras.utils.Sequence):
                     gray_patchs.append(gray_roi)
                     dog_patchs.append(dog_roi)
                     lbp_patchs.append(lbp_roi)
-                    i += 1
-                # gray_img = cv2.resize(cb, (256, 256))
-                # gray_img = np.expand_dims(gray_img, axis=-1)
-                # dog = np.expand_dims(dog, axis=-1)
-                # lbp = np.expand_dims(lbp, axis=-1)
-                # gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
-                # dog = np.concatenate((dog, dog, dog), axis=-1)
-                # lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
+                    j += 1
+
                 X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32')/255
                 X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32')/255
                 X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32')/255
-                # Store class
-                # X[i] = img.astype('float32')/255
+
 
                 y[i] = self.labels[idx]
 
