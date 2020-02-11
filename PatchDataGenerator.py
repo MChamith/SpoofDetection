@@ -63,7 +63,7 @@ class PatchDataGenerator(keras.utils.Sequence):
 
         # for resnet
         # X = np.empty((self.batch_size, 256, 256, 3))
-        y = np.empty((self.batch_size), dtype=int)
+        label = np.empty((self.batch_size), dtype=int)
 
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
@@ -107,7 +107,7 @@ class PatchDataGenerator(keras.utils.Sequence):
                 X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32')/255
 
 
-                y[i] = self.labels[idx]
+                label[i] = self.labels[idx]
 
                 # with open('log.txt', 'a') as lf:
                 #     lf.write('ID ' + str(ID) + ' label ' + str(y[i])+'\n')
@@ -120,5 +120,5 @@ class PatchDataGenerator(keras.utils.Sequence):
         # print('X_gray = ' + str(X_gray))
         # print('X_dog = ' + str(X_dog))
         # print('X_lbp = ' + str(X_lbp))
-        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(y, num_classes=self.n_classes)
+        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(label, num_classes=self.n_classes)
         # return X, y
