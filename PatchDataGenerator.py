@@ -101,11 +101,10 @@ class PatchDataGenerator(keras.utils.Sequence):
                     dog_patchs.append(dog_roi)
                     lbp_patchs.append(lbp_roi)
                     j += 1
-
-                X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32')/255
-                X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32')/255
-                X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32')/255
-
+                print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
+                X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
+                X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
+                X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32') / 255
 
                 label[i] = self.labels[idx]
 
