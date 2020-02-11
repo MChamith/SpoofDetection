@@ -1,10 +1,7 @@
 import fnmatch
 
 import keras
-from keras import optimizers
 
-from LBPDataGenerator import LBPDataGenerator
-from DataGenerator import DataGenerator
 from PatchDataGenerator import PatchDataGenerator
 from PatchModel import cnn_model
 # from Spoof_vgg16 import vgg16_feature_fusion
@@ -76,7 +73,7 @@ test_generator = PatchDataGenerator(**params, list_IDs=test_data['X_test'], labe
 model = cnn_model()
 print('compiling model')
 # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 print('model compiled')
 file_path = 'Checkpoint/PatchModel/Model-{epoch:02d}.h5'
 check_pointer = ModelCheckpoint(filepath=file_path)
