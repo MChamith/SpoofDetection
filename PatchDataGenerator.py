@@ -89,8 +89,7 @@ class PatchDataGenerator(keras.utils.Sequence):
                 print('height ' + str(height))
                 print('width' + str(width))
 
-                j = 0
-                while j < 16:
+                for j in range(16):
                     rH = random.uniform(0, height - 96)
                     rW = random.uniform(0, width - 96)
                     x, y = int(rH), int(rW)
@@ -100,8 +99,8 @@ class PatchDataGenerator(keras.utils.Sequence):
                     gray_patchs.append(gray_roi)
                     dog_patchs.append(dog_roi)
                     lbp_patchs.append(lbp_roi)
-                    j += 1
-                print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
+
+                # print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
                 X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
                 X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
                 X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32') / 255
