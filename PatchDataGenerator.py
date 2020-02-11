@@ -12,7 +12,7 @@ class PatchDataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
 
     def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=48,
-                 n_classes=2, shuffle=True):
+                 n_classes=1, shuffle=True):
         'Initialization'
         self.dim = dim
         self.batch_size = batch_size
