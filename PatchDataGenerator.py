@@ -87,8 +87,8 @@ class PatchDataGenerator(keras.utils.Sequence):
                 # print('lbped')
                 # gray_img = cv2.resize(gray, (256, 256))
                 height, width = img.shape[:2]
-                print('height ' + str(height))
-                print('width' + str(width))
+                # print('height ' + str(height))
+                # print('width' + str(width))
 
                 for j in range(16):
                     rH = random.uniform(0, height - 96)
