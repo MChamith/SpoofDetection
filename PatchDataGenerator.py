@@ -119,5 +119,5 @@ class PatchDataGenerator(keras.utils.Sequence):
         # print('X_gray = ' + str(X_gray))
         # print('X_dog = ' + str(X_dog))
         # print('X_lbp = ' + str(X_lbp))
-        return [X_gray, X_dog, X_lbp], keras.utils.to_categorical(label, num_classes=self.n_classes)
+        return [X_gray, X_dog, X_lbp],label
         # return X, y
