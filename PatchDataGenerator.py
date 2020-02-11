@@ -57,9 +57,7 @@ class PatchDataGenerator(keras.utils.Sequence):
         X_dog = np.empty((self.batch_size, 96, 96, 16))
         X_lbp = np.empty((self.batch_size, 96, 96, 16))
 
-        gray_patchs = []
-        lbp_patchs = []
-        dog_patchs = []
+
 
         # for resnet
         # X = np.empty((self.batch_size, 256, 256, 3))
@@ -68,6 +66,9 @@ class PatchDataGenerator(keras.utils.Sequence):
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
             # Store sample
+            gray_patchs = []
+            lbp_patchs = []
+            dog_patchs = []
 
             img = cv2.imread(ID)
             # img = cv2.resize(img, (256, 256))
