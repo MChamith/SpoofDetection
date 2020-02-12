@@ -89,7 +89,7 @@ class PatchDataGenerator(keras.utils.Sequence):
                 # print('width' + str(width))
 
                 for j in range(16):
-                    print('j = ' + str(j))
+                    # print('j = ' + str(j))
                     rH = random.uniform(0, height - 96)
                     rW = random.uniform(0, width - 96)
                     x, y = int(rH), int(rW)
