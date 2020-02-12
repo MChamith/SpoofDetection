@@ -67,8 +67,7 @@ class PatchDataGenerator(keras.utils.Sequence):
             gray_patchs = []
             lbp_patchs = []
             dog_patchs = []
-            with open('filelist.txt', 'a') as fw:
-                fw.write(ID + '\n')
+
             img = cv2.imread(ID)
             # img = cv2.resize(img, (256, 256))
             # img = cv2.resize(img, (256, 256))   # resnet
@@ -95,14 +94,15 @@ class PatchDataGenerator(keras.utils.Sequence):
                     rW = random.uniform(0, width - 96)
                     x, y = int(rH), int(rW)
                     gray_roi = gray[x:x + 96, y:y + 96]
-                    print('gray roi shape ' + str(gray_roi.shape) + '\n')
+                    with open('log.txt', 'a') as fw:
+                        fw.write('gray roi shape ' + str(gray_roi.shape) + '\n')
                     dog_roi = dog[x:x + 96, y:y + 96]
                     lbp_roi = lbp[x:x + 96, y:y + 96]
                     gray_patchs.append(gray_roi)
                     dog_patchs.append(dog_roi)
                     lbp_patchs.append(lbp_roi)
-
-                print('gray patches shape ' + str(np.array(gray_patchs).shape))
+                with open('log.txt', 'a') as fw:
+                    fw.write('gray patches shape ' + str(np.array(gray_patchs).shape))
                 # print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
                 X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
                 X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
