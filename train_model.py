@@ -90,5 +90,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop, csv_logger],
                                     shuffle=True,
-                                    steps_per_epoch=1000, validation_steps=50
+                                    steps_per_epoch=1024, validation_steps=64
                                     )
