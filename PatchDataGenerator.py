@@ -57,8 +57,6 @@ class PatchDataGenerator(keras.utils.Sequence):
         X_dog = np.empty((self.batch_size, 96, 96, 16))
         X_lbp = np.empty((self.batch_size, 96, 96, 16))
 
-
-
         # for resnet
         # X = np.empty((self.batch_size, 256, 256, 3))
         label = np.empty((self.batch_size), dtype=int)
@@ -69,7 +67,8 @@ class PatchDataGenerator(keras.utils.Sequence):
             gray_patchs = []
             lbp_patchs = []
             dog_patchs = []
-
+            with open('filelist.txt', 'a') as fw:
+                fw.write(ID + '\n')
             img = cv2.imread(ID)
             # img = cv2.resize(img, (256, 256))
             # img = cv2.resize(img, (256, 256))   # resnet
@@ -119,5 +118,5 @@ class PatchDataGenerator(keras.utils.Sequence):
         # print('X_gray = ' + str(X_gray))
         # print('X_dog = ' + str(X_dog))
         # print('X_lbp = ' + str(X_lbp))
-        return [X_gray, X_dog, X_lbp],label
+        return [X_gray, X_dog, X_lbp], label
         # return X, y
