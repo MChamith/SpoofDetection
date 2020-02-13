@@ -87,32 +87,33 @@ class PatchDataGenerator(keras.utils.Sequence):
                 height, width = img.shape[:2]
                 # print('height ' + str(height))
                 # print('width' + str(width))
-
-                for j in range(16):
-                    # print('j = ' + str(j))
-                    rH = random.uniform(0, height - 96)
-                    rW = random.uniform(0, width - 96)
-                    x, y = int(rH), int(rW)
-                    gray_roi = gray[x:x + 96, y:y + 96]
+                if height > 96 and width > 96:
+                    for j in range(16):
+                        # print('j = ' + str(j))
+                        rH = random.uniform(0, height - 96)
+                        rW = random.uniform(0, width - 96)
+                        x, y = int(rH), int(rW)
+                        gray_roi = gray[x:x + 96, y:y + 96]
+                        with open('log.txt', 'a') as fw:
+                            fw.write('gray roi shape ' + str(gray_roi.shape) + '\n')
+                        dog_roi = dog[x:x + 96, y:y + 96]
+                        lbp_roi = lbp[x:x + 96, y:y + 96]
+                        gray_patchs.append(gray_roi)
+                        dog_patchs.append(dog_roi)
+                        lbp_patchs.append(lbp_roi)
                     with open('log.txt', 'a') as fw:
-                        fw.write('gray roi shape ' + str(gray_roi.shape) + '\n')
-                    dog_roi = dog[x:x + 96, y:y + 96]
-                    lbp_roi = lbp[x:x + 96, y:y + 96]
-                    gray_patchs.append(gray_roi)
-                    dog_patchs.append(dog_roi)
-                    lbp_patchs.append(lbp_roi)
-                with open('log.txt', 'a') as fw:
-                    fw.write('gray patches shape ' + str(np.array(gray_patchs).shape))
-                # print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
-                X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
-                X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
-                X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32') / 255
+                        fw.write('gray patches shape ' + str(np.array(gray_patchs).shape))
+                    # print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
+                    X_gray[i] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
+                    X_dog[i] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
+                    X_lbp[i] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32') / 255
 
-                label[i] = self.labels[idx]
+                    label[i] = self.labels[idx]
 
-                # with open('log.txt', 'a') as lf:
-                #     lf.write('ID ' + str(ID) + ' label ' + str(y[i])+'\n')
-                # print('y[' + str(i) + ']= ' + str(y[i]))
+                    # with open('log.txt', 'a') as lf:
+                    #     lf.write('ID ' + str(ID) + ' label ' + str(y[i])+'\n')
+                    # print('y[' + str(i) + ']= ' + str(y[i]))
+
             except cv2.error as e:
                 print(e)
                 # print('skipping id')
