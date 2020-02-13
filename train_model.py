@@ -57,12 +57,10 @@ test_data['X_val'], test_data['val_label'] = shuffle(test_data['X_val'], test_da
 print('data shuffled')
 params = {'dim': (256, 256),
           'batch_size': 32,
-          'n_channels': 3,
           'shuffle': True}
 
 val_params = {'dim': (256, 256),
               'batch_size': 16,
-              'n_channels': 3,
               'shuffle': False}
 
 # print('train data ' + str(data['X_train']))
@@ -90,5 +88,5 @@ model_history = model.fit_generator(generator=train_gen,
                                     callbacks=[check_pointer,
                                                reduce_lr, tensorboard_keras, early_stop, csv_logger],
                                     shuffle=True,
-                                    steps_per_epoch=1024, validation_steps=64
+                                    steps_per_epoch=4000, validation_steps=200
                                     )
