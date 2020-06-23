@@ -10,8 +10,8 @@ from sklearn.utils import shuffle
 from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 import os
 
-
-res_model = InceptionResNetV2(include_top=False, weights='imagenet', input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
+res_model = InceptionResNetV2(include_top=False, weights='imagenet', input_tensor=None, input_shape=(224, 224, 3),
+                              pooling=None, classes=1000)
 x = res_model.output
 
 x = GlobalAveragePooling2D()(x)
@@ -19,7 +19,7 @@ x = GlobalAveragePooling2D()(x)
 x = Dense(256, activation='relu')(x)
 
 x = Dense(1, activation='sigmoid')(x)
-model = Model(inputs = res_model.input, outputs = x)
+model = Model(inputs=res_model.input, outputs=x)
 sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['binary_accuracy'])
 # print(model.summary())
@@ -36,29 +36,32 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.png"):
         path = os.path.join(root, filename)
         img = cv2.imread(path)
-        height, width = img.shape[:-1]
-        if height > 224 and width > 224:
-            data['X_train'].append(path)
-            print(path.split('/')[-2])
-            if path.split('/')[-2] == 'real':
+        try:
+            height, width = img.shape[:-1]
+            if height > 224 and width > 224:
+                data['X_train'].append(path)
+                print(path.split('/')[-2])
+                if path.split('/')[-2] == 'real':
 
-                data['label'].append(1)
-            elif path.split('/')[-2] == 'spoof':
-                data['label'].append(0)
-
-
+                    data['label'].append(1)
+                elif path.split('/')[-2] == 'spoof':
+                    data['label'].append(0)
+        except :
+            continue
 for root, dirnames, filenames in os.walk(VAL_DIR):
     for filename in fnmatch.filter(filenames, "*.png"):
         path = os.path.join(root, filename)
         img = cv2.imread(path)
-        height, width = img.shape[:-1]
-        if height > 224 and width > 224:
-            test_data['X_val'].append(path)
-            if path.split('/')[-2] == 'real':
-                test_data['val_label'].append(1)
-            elif path.split('/')[-2] == 'spoof':
-                test_data['val_label'].append(0)
-
+        try:
+            height, width = img.shape[:-1]
+            if height > 224 and width > 224:
+                test_data['X_val'].append(path)
+                if path.split('/')[-2] == 'real':
+                    test_data['val_label'].append(1)
+                elif path.split('/')[-2] == 'spoof':
+                    test_data['val_label'].append(0)
+        except:
+            continue
 # count = 0
 # print('collecting validation and test data')
 # for root, dirnames, filenames in os.walk(TEST_DIR):
@@ -89,9 +92,9 @@ params = {'dim': (224, 224),
           'shuffle': True}
 
 val_params = {'dim': (224, 224),
-          'batch_size': 16,
-          'n_channels': 3,
-          'shuffle': False}
+              'batch_size': 16,
+              'n_channels': 3,
+              'shuffle': False}
 
 train_gen = DataGenerator(**params, list_IDs=data['X_train'], labels=data['label'])
 val_generator = DataGenerator(**val_params, list_IDs=test_data['X_val'], labels=test_data['val_label'])
@@ -111,4 +114,3 @@ model_history = model.fit_generator(generator=train_gen,
                                     shuffle=True,
                                     steps_per_epoch=1000, validation_steps=20
                                     )
-
