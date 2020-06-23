@@ -81,29 +81,35 @@ def cnn_model():
 
 
 
-# model = cnn_model()
-# print(model.summary())
-
-
-
+model = cnn_model()
+print(model.summary())
+# X_gray = np.empty((32, 96, 96, 16))
 #
-# img = cv2.imread('036_spoof/036-1-2-1-12.jpg')
-# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# print('gray shape ' + str(img_gray.shape))
-# height, width = img.shape[:2]
-# print('height ' + str(height))
-# print('width' + str(width))
-# images = []
-# i = 0
-# while i < 10:
-#     rH = random.uniform(0, height - 96)
-#     rW = random.uniform(0, width - 96)
-#     print('rand h ' + str(rH) + 'rand w ' + str(rW))
-#     x, y = int(rH), int(rW)
-#     roi = img[x:x + 96, y:y + 96, :]
-#     roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-#     images.append(roi_gray)
-#     # cv2.imwrite('data/patches/roi_spoof' + str(i) + '.jpg', roi)
-#     i += 1
-# image_arr = np.moveaxis(np.array(images), 0, -1).astype('float32')/255
-# print('shape ' + str(image_arr))
+# for i in range(32):
+#     img = cv2.imread('036_spoof/036-1-2-1-12.jpg')
+#     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#     print('gray shape ' + str(img_gray.shape))
+#     height, width = img.shape[:2]
+#     print('height ' + str(height))
+#     print('width' + str(width))
+#     images = []
+#     i = 0
+#     while i < 16:
+#         rH = random.uniform(0, height - 96)
+#         rW = random.uniform(0, width - 96)
+#         print('rand h ' + str(rH) + 'rand w ' + str(rW))
+#         x, y = int(rH), int(rW)
+#         roi = img[x:x + 96, y:y + 96, :]
+#         roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+#         images.append(roi_gray)
+#         # cv2.imwrite('data/patches/roi_spoof' + str(i) + '.jpg', roi)
+#         i += 1
+#     image_arr = np.moveaxis(np.array(images), 0, -1).astype('float32') / 255
+#     print('shape ' + str((np.moveaxis(np.array(images), 0, -1).astype('float32') / 255).shape))
+#     X_gray[i] = np.moveaxis(np.array(images), 0, -1).astype('float32') / 255
+img = cv2.imread('036_spoof/036-1-2-1-12.jpg')
+height, width = img.shape[:2]
+x = height - 96
+y = height - 96
+print(img[0:height, 0:width, :])
+cv2.imwrite('testimage.jpg', img[x:x+99, y:y+99, :])

@@ -1,4 +1,5 @@
 import os
+import random
 
 import cv2
 import keras
@@ -11,15 +12,17 @@ import numpy as np
 # import face_recognition
 import matplotlib.pyplot as plt
 
-filename = '/home/ubuntu/volume/data/IMG_1759.MOV'
-cap = cv2.VideoCapture(filename)
-face_cascade = cv2.CascadeClassifier('/home/ubuntu/volume/AntiSpoofing/haarcascade_frontalface_default.xml')
-X_gray = np.empty((1, 224, 224, 3))
-X_dog = np.empty((1, 224, 224, 3))
-X_lbp = np.empty((1, 224, 224, 3))
+filename = 'data/IMG_2769.MOV'
+cap = cv2.VideoCapture(0)
+face_cascade = cv2.CascadeClassifier(
+    '/home/chamith/Documents/Project/msid_server/venv/lib/python3.6/site-packages/cv2/data'
+    '/haarcascade_frontalface_default.xml')
+X_gray = np.empty((1, 96, 96, 16))
+X_dog = np.empty((1, 96, 96, 16))
+X_lbp = np.empty((1, 96, 96, 16))
 # X = np.empty((1, 224, 224, 3))
 result = np.zeros(2)
-model = keras.models.load_model('/home/ubuntu/volume/SpoofDetection/Checkpoint/VGG_fusion/Model-03.h5')
+model = keras.models.load_model('PatchModel/Model-12.h5')
 # print(model.summary())
 # while True:
 # for file in os.listdir('036_spoof'):
@@ -29,6 +32,9 @@ count = 0
 while True:
     # file = 'data/Skype_Picture_2019_11_21T09_58_26_954Z.jpeg'
     ret, frame = cap.read()
+    gray_patchs = []
+    lbp_patchs = []
+    dog_patchs = []
     # cv2.imshow('frame' , frame)
     # print(ret)
     # print(frame)
@@ -41,6 +47,7 @@ while True:
     # faces = face_recognition.face_locations(frame.copy(), number_of_times_to_upsample=0, model="cnn")
     # print(faces)
     if faces is not None:
+
     # if True:
         for face in faces:
         # if True:
@@ -65,31 +72,39 @@ while True:
 
             # cv2.imshow('roi', roi)
             # cv2.imwrite('roi3.jpg', roi)
-            roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-            dog = calc_dog(roi_gray)
+            gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+            # ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
+            # cb = ycrcb[0]
+            # print('converted to gray')
+            dog = calc_dog(gray)
+            # print('dog')
+            lbp = calc_lbp(gray)
+            # print('lbped')
+            # gray_img = cv2.resize(gray, (256, 256))
+            height, width = roi.shape[:2]
+            # print('height ' + str(height))
+            # print('width' + str(width))
+            if height > 96 and width > 96:
+                for j in range(16):
+                    # print('j = ' + str(j))
+                    rH = random.uniform(0, height - 96)
+                    rW = random.uniform(0, width - 96)
+                    x, y = int(rH), int(rW)
+                    gray_roi = gray[x:x + 96, y:y + 96]
+                    with open('log.txt', 'a') as fw:
+                        fw.write('gray roi shape ' + str(gray_roi.shape) + '\n')
+                    dog_roi = dog[x:x + 96, y:y + 96]
+                    lbp_roi = lbp[x:x + 96, y:y + 96]
+                    gray_patchs.append(gray_roi)
+                    dog_patchs.append(dog_roi)
+                    lbp_patchs.append(lbp_roi)
 
-            lbp = calc_lbp(roi_gray)
-            # print(dog)
-
-            gray_img = cv2.resize(roi_gray, (224, 224))
-
-            gray_img = np.expand_dims(gray_img, axis=-1)
-            dog = np.expand_dims(dog, axis=-1)
-            lbp = np.expand_dims(lbp, axis=-1)
-            gray_img = np.concatenate((gray_img, gray_img, gray_img), axis=-1)
-            dog = np.concatenate((dog, dog, dog), axis=-1)
-            lbp = np.concatenate((lbp, lbp, lbp), axis=-1)
-            cv2.imwrite('gray.jpg', gray_img)
-            cv2.imwrite('lbp.jpg', lbp)
-            cv2.imwrite('dog.jpg', dog)
-            # cv2.imshow('lbp', lbp)
-            # cv2.imshow('roi', gray_img)
-            # cv2.imshow('dog', dog)
-            X_gray[0] = gray_img.astype('float32') / 255
-            X_dog[0] = dog.astype('float32') / 255
-            X_lbp[0] = lbp.astype('float32') / 255
-            prediction = model.predict([X_gray, X_dog, X_lbp])
-            # prediction = model.predict(X_lbp)
+                # print('shape ' + str(np.moveaxis(np.array(gray_patchs), 0, -1).shape))
+                X_gray[0] = np.moveaxis(np.array(gray_patchs), 0, -1).astype('float32') / 255
+                X_dog[0] = np.moveaxis(np.array(dog_patchs), 0, -1).astype('float32') / 255
+                X_lbp[0] = np.moveaxis(np.array(lbp_patchs), 0, -1).astype('float32') / 255
+                prediction = model.predict([X_gray, X_dog, X_lbp])
+                    # prediction = model.predict(X_lbp)
             #
             # if np.argmax(prediction) == 1:
             #     print('live ' + str(prediction))
@@ -98,12 +113,16 @@ while True:
             #     print('spoofing ' + str(prediction))
             #     spoof_count +=1
 
-            if prediction > 0.5:
-                print('live ' + str(prediction))
-                live_count += 1
-            else:
-                print('spoofing ' + str(prediction))
-                spoof_count += 1
+                if prediction > 0.5:
+                    print('live ' + str(prediction))
+                    live_count += 1
+                else:
+                    print('spoofing ' + str(prediction))
+                    spoof_count += 1
+
+                gray_patchs.clear()
+                dog_patchs.clear()
+                lbp_patchs.clear()
 
             # print(prediction)
             # print(np.argmax(prediction))
@@ -146,9 +165,9 @@ while True:
             #     plt.grid(False)
             #     plt.imshow(display_grid, aspect='auto', cmap='viridis')
             #     plt.savefig('intermediate_features/live' +str(layer_name)+'.jpg')
-            # if cv2.waitKey(1) & 0xFF == ord('q'):
-            #     break
-        # cv2.waitKey(0)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        cv2.waitKey(0)
     else:
         print('no face found ')
 print('live ' + str(live_count) + ' spoof ' + str(spoof_count) )

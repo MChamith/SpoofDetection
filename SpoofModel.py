@@ -68,9 +68,9 @@ def cnn_model():
 
     return model
 
-# model = cnn_model()
-# print(model.summary())
-#
+model = cnn_model()
+print(model.summary())
+
 # import keras
 #
 # model = keras.models.load_model('Models/Model-03.h5')
