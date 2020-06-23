@@ -3,7 +3,7 @@ from keras import Model, optimizers
 from keras.applications.resnet50 import ResNet50
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.layers import GlobalAveragePooling2D, Dense, MaxPooling1D, GlobalAveragePooling1D
-
+import cv2
 from DataGenerator import DataGenerator
 import fnmatch
 from sklearn.utils import shuffle
@@ -35,25 +35,29 @@ print('collecting training data')
 for root, dirnames, filenames in os.walk(TRAIN_DIR):
     for filename in fnmatch.filter(filenames, "*.png"):
         path = os.path.join(root, filename)
-        # print(path)
-        data['X_train'].append(path)
-        print(path.split('/')[-2])
-        if path.split('/')[-2] == 'real':
+        img = cv2.imread(path)
+        height, width = img.shape[:-1]
+        if height > 224 and width > 224:
+            data['X_train'].append(path)
+            print(path.split('/')[-2])
+            if path.split('/')[-2] == 'real':
 
-            data['label'].append(1)
-        elif path.split('/')[-2] == 'spoof':
-            data['label'].append(0)
+                data['label'].append(1)
+            elif path.split('/')[-2] == 'spoof':
+                data['label'].append(0)
+
 
 for root, dirnames, filenames in os.walk(VAL_DIR):
     for filename in fnmatch.filter(filenames, "*.png"):
         path = os.path.join(root, filename)
-        # print(path)
-        test_data['X_val'].append(path)
-        if path.split('/')[-2] == 'real':
-            test_data['val_label'].append(1)
-        elif path.split('/')[-2] == 'spoof':
-            test_data['val_label'].append(0)
-
+        img = cv2.imread(path)
+        height, width = img.shape[:-1]
+        if height > 224 and width > 224:
+            test_data['X_val'].append(path)
+            if path.split('/')[-2] == 'real':
+                test_data['val_label'].append(1)
+            elif path.split('/')[-2] == 'spoof':
+                test_data['val_label'].append(0)
 
 # count = 0
 # print('collecting validation and test data')
