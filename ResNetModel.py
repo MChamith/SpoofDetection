@@ -37,7 +37,9 @@ for root, dirnames, filenames in os.walk(TRAIN_DIR):
         path = os.path.join(root, filename)
         # print(path)
         data['X_train'].append(path)
+        print(path.split('/')[-2])
         if path.split('/')[-2] == 'real':
+
             data['label'].append(1)
         elif path.split('/')[-2] == 'spoof':
             data['label'].append(0)
