@@ -65,6 +65,7 @@ class DataGenerator(keras.utils.Sequence):
             # Store sample
 
             img = cv2.imread(ID)
+            print('image ' + img)
             img = random_crop(img, (224, 224))
             X[i] = img
             # img = cv2.resize(img, (256, 256))
