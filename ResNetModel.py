@@ -11,7 +11,7 @@ from keras.callbacks import Callback, ModelCheckpoint, ReduceLROnPlateau, EarlyS
 import os
 
 
-res_model = InceptionResNetV2(include_top=False, weights=None, input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
+res_model = InceptionResNetV2(include_top=False, weights='imagenet', input_tensor=None, input_shape=(224, 224, 3), pooling=None, classes=1000)
 x = res_model.output
 
 x = GlobalAveragePooling2D()(x)
